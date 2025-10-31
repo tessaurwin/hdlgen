@@ -4,3 +4,24 @@ env/
 outputs/logs/
 outputs/v/*.v
 results/*.csv
+
+# additional ignore patterns
+*.pyc
+venv/
+.venv/
+
+# macOS junk
+.DS_Store
+
+# ollama models / large data
+*.bin
+*.pt
+*.ckpt
+*.onnx
+*.tar
+*.zip
+
+# project outputs
+outputs/
+results/
+logs/

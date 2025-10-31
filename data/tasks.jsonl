@@ -1,0 +1,112 @@
+[
+  {
+    "id": "and2",
+    "top": "and2",
+    "prompt": "Write a simple Verilog module named and2 that implements a 2-input AND gate. Inputs: a, b. Output: y. Use a single continuous assign statement."
+  },
+  {
+    "id": "or2",
+    "top": "or2",
+    "prompt": "Create a Verilog module or2 that performs a logical OR between two 1-bit inputs a and b. Output should be y."
+  },
+  {
+    "id": "xor2",
+    "top": "xor2",
+    "prompt": "Design a Verilog module xor2 with two 1-bit inputs a, b and one 1-bit output y that implements XOR logic."
+  },
+  {
+    "id": "mux2",
+    "top": "mux2",
+    "prompt": "Write a 2:1 multiplexer module in Verilog called mux2. Inputs: a, b, sel. Output: y. Use a ternary operator."
+  },
+  {
+    "id": "adder4",
+    "top": "adder4",
+    "prompt": "Design a 4-bit ripple carry adder in Verilog with inputs a[3:0], b[3:0], and cin. Outputs should be sum[3:0] and cout."
+  },
+  {
+    "id": "counter8",
+    "top": "counter8",
+    "prompt": "Write an 8-bit up counter module with async active-low reset rst_n, enable en, and output q[7:0]. Clock input is clk."
+  },
+  {
+    "id": "dff_sync",
+    "top": "dff_sync",
+    "prompt": "Create a positive edge triggered D flip-flop module in Verilog. Inputs: clk, d, rst_n. Output: q."
+  },
+  {
+    "id": "reg8",
+    "top": "reg8",
+    "prompt": "Implement an 8-bit register with asynchronous reset rst_n and clock enable. Inputs: clk, en, rst_n, d[7:0]; output q[7:0]."
+  },
+  {
+    "id": "decoder2to4",
+    "top": "decoder2to4",
+    "prompt": "Write a behavioral Verilog module for a 2-to-4 line decoder with enable input en. Inputs: a[1:0], en. Outputs: y[3:0]."
+  },
+  {
+    "id": "encoder4to2",
+    "top": "encoder4to2",
+    "prompt": "Design a simple 4-to-2 encoder in Verilog with inputs d[3:0] and outputs y[1:0]."
+  },
+  {
+    "id": "comparator4",
+    "top": "comparator4",
+    "prompt": "Write a 4-bit magnitude comparator in Verilog that outputs lt, eq, gt for inputs a[3:0], b[3:0]."
+  },
+  {
+    "id": "shift_register",
+    "top": "shift_register",
+    "prompt": "Implement an 8-bit serial-in, parallel-out shift register in Verilog. Inputs: clk, rst_n, serial_in; output: q[7:0]."
+  },
+  {
+    "id": "fsm_traffic",
+    "top": "fsm_traffic",
+    "prompt": "Design a simple FSM in Verilog for a traffic light controller with three states: RED, GREEN, YELLOW. Use clk and rst_n inputs, and one output light[1:0]."
+  },
+  {
+    "id": "alu4",
+    "top": "alu4",
+    "prompt": "Write a small 4-bit ALU module in Verilog that performs AND, OR, ADD, and XOR operations based on a 2-bit select input sel."
+  },
+  {
+    "id": "parity_checker",
+    "top": "parity_checker",
+    "prompt": "Write a Verilog module that checks even parity for an 8-bit input data[7:0]. Output parity should be 1 if even."
+  },
+  {
+    "id": "priority_encoder",
+    "top": "priority_encoder",
+    "prompt": "Implement a priority encoder in Verilog for 8 input lines (d[7:0]) and 3 output lines (y[2:0])."
+  },
+  {
+    "id": "mux4",
+    "top": "mux4",
+    "prompt": "Design a 4:1 multiplexer module in Verilog using a case statement. Inputs: a, b, c, d, sel[1:0]; output y."
+  },
+  {
+    "id": "adder_sub",
+    "top": "adder_sub",
+    "prompt": "Write a Verilog module that performs 8-bit addition or subtraction depending on control input sub. Inputs: a[7:0], b[7:0], sub. Outputs: result[7:0], cout."
+  },
+  {
+    "id": "lfsr4",
+    "top": "lfsr4",
+    "prompt": "Create a 4-bit LFSR (linear feedback shift register) module in Verilog with input clk and output q[3:0]. Use taps appropriate for maximal length."
+  },
+  {
+    "id": "ram_simple",
+    "top": "ram_simple",
+    "prompt": "Implement a simple 8x8 synchronous RAM module in Verilog with inputs clk, we, addr[2:0], din[7:0] and output dout[7:0]."
+  },
+  {
+    "id": "fsm_lock",
+    "top": "fsm_lock",
+    "prompt": "Design a Verilog FSM lock module that unlocks when the sequence 1011 is entered on input seq. Inputs: clk, rst_n, seq; output: unlocked."
+  },
+  {
+    "id": "pwm_gen",
+    "top": "pwm_gen",
+    "prompt": "Write a Verilog module that generates a PWM signal based on an 8-bit duty cycle input. Inputs: clk, rst_n, duty[7:0]; output pwm_out."
+  }
+]
