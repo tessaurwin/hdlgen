@@ -1,0 +1,1 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/shift_register.v:1:8-25: Declared module does not match the first dot-delimited component of file name: "shift_register" [Style: file-names] [module-filename]

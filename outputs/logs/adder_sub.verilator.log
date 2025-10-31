@@ -1,0 +1,18 @@
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:9:7: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'result'
+                                                                                 : ... note: In instance 'adder_subtractor'
+    9 |       result = a - b;
+      |       ^~~~~~
+                    ... For error description see https://verilator.org/warn/PROCASSWIRE?v=5.038
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:10:7: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'cout'
+                                                                                  : ... note: In instance 'adder_subtractor'
+   10 |       cout = a[7] ^ b[7];
+      |       ^~~~
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:12:7: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'result'
+                                                                                  : ... note: In instance 'adder_subtractor'
+   12 |       result = a + b;
+      |       ^~~~~~
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:13:7: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'cout'
+                                                                                  : ... note: In instance 'adder_subtractor'
+   13 |       cout = a[7] & b[7];
+      |       ^~~~
+%Error: Exiting due to 4 error(s)

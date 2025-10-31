@@ -1,0 +1,1 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/dff_sync.v:1:8-10: Declared module does not match the first dot-delimited component of file name: "dff_sync" [Style: file-names] [module-filename]

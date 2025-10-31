@@ -1,0 +1,4 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:1:8-18: Declared module does not match the first dot-delimited component of file name: "decoder2to4" [Style: file-names] [module-filename]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:5:1-2: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:6:3-8: Use 'always_comb' instead of 'always @*'. [Style: combinational-logic] [always-comb]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:8:7-10: Explicitly define a default case for every case statement or add `unique` qualifier to the case statement. [Style: case-statements] [case-missing-default]

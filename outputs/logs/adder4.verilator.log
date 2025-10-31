@@ -1,0 +1,16 @@
+%Warning-WIDTHEXPAND: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder4.v:8:17: Operator ADD expects 4 bits on the RHS, but RHS's VARREF 'cin' generates 1 bits.
+                                                                                 : ... note: In instance 'ripple_carry_adder'
+    8 |     sum = a + b + cin;
+      |                 ^
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.038
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder4.v:8:5: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'sum'
+                                                                              : ... note: In instance 'ripple_carry_adder'
+    8 |     sum = a + b + cin;
+      |     ^~~
+                    ... For error description see https://verilator.org/warn/PROCASSWIRE?v=5.038
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder4.v:9:5: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'cout'
+                                                                              : ... note: In instance 'ripple_carry_adder'
+    9 |     cout = (a[3] & b[3]) | (a[2] & b[2]) | (a[1] & b[1]) | (a[0] & b[0]);
+      |     ^~~~
+%Error: Exiting due to 2 error(s), 1 warning(s)

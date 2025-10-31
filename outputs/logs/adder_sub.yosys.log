@@ -1,0 +1,22 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.58 (git sha1 157aabb5831cc77d08346001c4a085f188d7c736, clang++ 17.0.0 -fPIC -O3)
+
+-- Running command `read_verilog /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v; hierarchy -check -top adder_sub; synth -top adder_sub; stat' --
+
+1. Executing Verilog-2005 frontend: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v
+Parsing Verilog input from `/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v' to AST representation.
+verilog frontend filename /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v
+Generating RTLIL representation for module `\adder_subtractor'.
+Warning: wire '\result' is assigned in a block at /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:9.7-9.21.
+Warning: wire '\cout' is assigned in a block at /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:10.7-10.25.
+Warning: wire '\result' is assigned in a block at /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:12.7-12.21.
+Warning: wire '\cout' is assigned in a block at /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/adder_sub.v:13.7-13.25.
+Successfully finished Verilog frontend.
+
+2. Executing HIERARCHY pass (managing design hierarchy).
+ERROR: Module `adder_sub' not found!

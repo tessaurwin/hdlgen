@@ -1,0 +1,6 @@
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v:18:1: syntax error, unexpected $end
+   18 | end
+      | ^~~
+        ... See the manual at https://verilator.org/verilator_doc.html?v=5.038 for more assistance.
+%Error: Cannot continue
+        ... This fatal error may be caused by the earlier error(s); resolve those first.

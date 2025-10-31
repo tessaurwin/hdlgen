@@ -1,0 +1,15 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.58 (git sha1 157aabb5831cc77d08346001c4a085f188d7c736, clang++ 17.0.0 -fPIC -O3)
+
+-- Running command `read_verilog /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v; hierarchy -check -top counter8; synth -top counter8; stat' --
+
+1. Executing Verilog-2005 frontend: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v
+Parsing Verilog input from `/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v' to AST representation.
+verilog frontend filename /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v
+Lexer warning: The SystemVerilog keyword `logic' (at /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v:2) is not recognized unless read_verilog is called with -sv!
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/counter8.v:2: ERROR: syntax error, unexpected TOK_ID, expecting ')' or ',' or '='

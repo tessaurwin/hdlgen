@@ -1,0 +1,22 @@
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:9:16: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                    : ... note: In instance 'Decoder_2_4'
+    9 |         2'b00: y = 4'b0000;
+      |                ^
+                    ... For error description see https://verilator.org/warn/PROCASSWIRE?v=5.038
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:10:16: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                     : ... note: In instance 'Decoder_2_4'
+   10 |         2'b01: y = 4'b0001;
+      |                ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:11:16: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                     : ... note: In instance 'Decoder_2_4'
+   11 |         2'b10: y = 4'b0010;
+      |                ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:12:16: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                     : ... note: In instance 'Decoder_2_4'
+   12 |         2'b11: y = 4'b0011;
+      |                ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/decoder2to4.v:15:7: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                    : ... note: In instance 'Decoder_2_4'
+   15 |       y = 4'bzzzz;
+      |       ^
+%Error: Exiting due to 5 error(s)

@@ -1,0 +1,14 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2025  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.58 (git sha1 157aabb5831cc77d08346001c4a085f188d7c736, clang++ 17.0.0 -fPIC -O3)
+
+-- Running command `read_verilog /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v; hierarchy -check -top lfsr4; synth -top lfsr4; stat' --
+
+1. Executing Verilog-2005 frontend: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v
+Parsing Verilog input from `/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v' to AST representation.
+verilog frontend filename /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/lfsr4.v:7: ERROR: syntax error, unexpected '[', expecting ',' or ';' or '='

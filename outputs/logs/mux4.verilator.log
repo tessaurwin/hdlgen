@@ -1,0 +1,38 @@
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:17: Input/output/inout declaration not found for port: 'a'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                 ^
+        ... See the manual at https://verilator.org/verilator_doc.html?v=5.038 for more assistance.
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:20: Input/output/inout declaration not found for port: 'b'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                    ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:23: Input/output/inout declaration not found for port: 'c'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                       ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:26: Input/output/inout declaration not found for port: 'd'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                          ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:29: Input/output/inout declaration not found for port: 'sel'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                             ^~~
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:1:39: Input/output/inout declaration not found for port: 'y'
+    1 | module mux_4to1(a, b, c, d, sel[1:0], y);
+      |                                       ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:3:11: Can't find definition of variable: 'sel'
+    3 |     case (sel)
+      |           ^~~
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:4:18: Can't find definition of variable: 'a'
+    4 |       2'b00: y = a;
+      |                  ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:4:14: Can't find definition of variable: 'y'
+    4 |       2'b00: y = a;
+      |              ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:5:18: Can't find definition of variable: 'b'
+    5 |       2'b01: y = b;
+      |                  ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:6:18: Can't find definition of variable: 'c'
+    6 |       2'b10: y = c;
+      |                  ^
+%Error: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/mux4.v:7:18: Can't find definition of variable: 'd'
+    7 |       2'b11: y = d;
+      |                  ^
+%Error: Exiting due to 12 error(s)

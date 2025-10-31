@@ -1,0 +1,34 @@
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:8:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                        : ... note: In instance 'priority_encoder'
+    8 |         y = 3'b100;  
+      |         ^
+                    ... For error description see https://verilator.org/warn/PROCASSWIRE?v=5.038
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:10:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   10 |         y = 3'b010;
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:12:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   12 |         y = 3'b001;
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:14:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   14 |         y = 3'b110;  
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:16:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   16 |         y = 3'b101;
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:18:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   18 |         y = 3'b011;
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:20:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   20 |         y = 3'b000;  
+      |         ^
+%Error-PROCASSWIRE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:22:9: Procedural assignment to wire, perhaps intended var (IEEE 1800-2023 6.5): 'y'
+                                                                                         : ... note: In instance 'priority_encoder'
+   22 |         y = 3'b111;  
+      |         ^
+%Error: Exiting due to 8 error(s)

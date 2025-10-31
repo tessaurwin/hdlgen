@@ -1,0 +1,30 @@
+%Warning-WIDTHTRUNC: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:11:13: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'STATE_RED' generates 3 bits.
+                                                                                      : ... note: In instance 'traffic_light_controller'
+   11 |       light <= STATE_RED;
+      |             ^~
+                     ... For warning description see https://verilator.org/warn/WIDTHTRUNC?v=5.038
+                     ... Use "/* verilator lint_off WIDTHTRUNC */" and lint_on around source to disable this message.
+%Warning-WIDTHTRUNC: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:15:17: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'STATE_GREEN' generates 3 bits.
+                                                                                      : ... note: In instance 'traffic_light_controller'
+   15 |           light <= STATE_GREEN;
+      |                 ^~
+%Warning-WIDTHTRUNC: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:18:17: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'STATE_YELLOW' generates 3 bits.
+                                                                                      : ... note: In instance 'traffic_light_controller'
+   18 |           light <= STATE_YELLOW;
+      |                 ^~
+%Warning-WIDTHTRUNC: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:21:17: Operator ASSIGNDLY expects 2 bits on the Assign RHS, but Assign RHS's VARREF 'STATE_RED' generates 3 bits.
+                                                                                      : ... note: In instance 'traffic_light_controller'
+   21 |           light <= STATE_RED;
+      |                 ^~
+%Warning-WIDTHEXPAND: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:13:7: Operator CASE expects 3 bits on the Case expression, but Case expression's VARREF 'light' generates 2 bits.
+                                                                                      : ... note: In instance 'traffic_light_controller'
+   13 |       case (light)
+      |       ^~~~
+                      ... For warning description see https://verilator.org/warn/WIDTHEXPAND?v=5.038
+                      ... Use "/* verilator lint_off WIDTHEXPAND */" and lint_on around source to disable this message.
+%Warning-CASEINCOMPLETE: /Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:13:7: Case values incompletely covered (example pattern 0x0)
+   13 |       case (light)
+      |       ^~~~
+                         ... For warning description see https://verilator.org/warn/CASEINCOMPLETE?v=5.038
+                         ... Use "/* verilator lint_off CASEINCOMPLETE */" and lint_on around source to disable this message.
+%Error: Exiting due to 6 warning(s)

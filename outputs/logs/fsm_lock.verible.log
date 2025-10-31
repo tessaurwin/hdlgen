@@ -1,0 +1,6 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:24:33: syntax error at token "2"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:29:16: syntax error at token "2"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:32:21-24: syntax error at token "else"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:35:13-15: syntax error at token "end"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:39:17-19: syntax error at token "end"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_lock.v:41:17-19: syntax error at token "end"

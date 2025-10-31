@@ -1,0 +1,8 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:2:26: syntax error at token ";"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:3:5-10: syntax error at token "output"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:4:1: syntax error at token ")"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:6:1-6: syntax error at token "always"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:9:9: syntax error at token "2"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:10:9: syntax error at token "2"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:11:9: syntax error at token "2"
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/alu4.v:12:5-11: syntax error at token "endcase"

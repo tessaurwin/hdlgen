@@ -1,0 +1,7 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:1:8-31: Declared module does not match the first dot-delimited component of file name: "fsm_traffic" [Style: file-names] [module-filename]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:2:13-21: Explicitly define a storage type for every parameter and localparam, (STATE_RED). [Style: constants] [explicit-parameter-storage-type]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:3:13-23: Explicitly define a storage type for every parameter and localparam, (STATE_GREEN). [Style: constants] [explicit-parameter-storage-type]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:4:13-24: Explicitly define a storage type for every parameter and localparam, (STATE_YELLOW). [Style: constants] [explicit-parameter-storage-type]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:5:1-2: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:8:1-2: Remove trailing spaces. [Style: trailing-spaces] [no-trailing-spaces]
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/fsm_traffic.v:13:7-10: Explicitly define a default case for every case statement or add `unique` qualifier to the case statement. [Style: case-statements] [case-missing-default]

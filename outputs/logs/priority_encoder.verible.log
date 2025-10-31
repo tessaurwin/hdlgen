@@ -1,0 +1,1 @@
+/Users/tessamaeurwin/Desktop/hdlgen/outputs/v/priority_encoder.v:6:1-6: Use 'always_comb' instead of 'always @*'. [Style: combinational-logic] [always-comb]
