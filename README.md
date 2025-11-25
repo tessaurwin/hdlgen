@@ -134,15 +134,15 @@ timestamp
 
 Baseline TinyLlama:
 
-Verible 16 of 22 about 73 percent
-Verilator 1 of 22 about 4.5 percent
-Yosys 0 of 22 0 percent
+Verible 16 of 22 about 73%
+Verilator 1 of 22 about 4.5%
+Yosys 0 of 22 about 0%
 
 LoRA TinyLlama:
 
-Verible 19 of 22 about 86 percent
-Verilator 18 of 22 about 82 percent
-Yosys 19 of 22 about 86 percent
+Verible 19 of 22 about 86%
+Verilator 18 of 22 about 82%
+Yosys 19 of 22 about 86%
 
 This will vary with dataset size, types of tasks, and prompt phrasing.
 
