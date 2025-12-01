@@ -1,0 +1,69 @@
+k[
+  {
+    "id": "vector_part_select",
+    "instruction": "A 32-bit vector can be viewed as containing 4 bytes (bits [31:24], [23:16], etc.). Build a circuit that will reverse the byte ordering of a 4-byte word.",
+    "module_declaration": "module top_module( input [31:0] in, output [31:0] out );",
+    "output": "module top_module( input [31:0] in, output [31:0] out );\n  assign out[31:24] = in[7:0];\n  assign out[23:16] = in[15:8];\n  assign out[15:8]  = in[23:16];\n  assign out[7:0]   = in[31:24];\nendmodule"
+  },
+  {
+    "id": "bitwise_operators",
+    "instruction": "Two 3-bit inputs. Compute bitwise-OR, logical-OR, and inverses. Place ~b in out_not[5:3] and ~a in out_not[2:0].",
+    "module_declaration": "module top_module( input [2:0] a, input [2:0] b, output [2:0] out_or_bitwise, output out_or_logical, output [5:0] out_not );",
+    "output": "module top_module( input [2:0] a, input [2:0] b, output [2:0] out_or_bitwise, output out_or_logical, output [5:0] out_not );\n  assign out_or_bitwise = a | b;\n  assign out_or_logical = (|a) || (|b);\n  assign out_not[5:3] = ~b;\n  assign out_not[2:0] = ~a;\nendmodule"
+  },
+  {
+    "id": "four_input_gates",
+    "instruction": "Combinational circuit with four inputs in[3:0]. Outputs: out_and=AND of all 4, out_or=OR of all 4, out_xor=XOR of all 4.",
+    "module_declaration": "module top_module( input [3:0] in, output out_and, output out_or, output out_xor );",
+    "output": "module top_module( input [3:0] in, output out_and, output out_or, output out_xor );\n  assign out_and = &in;\n  assign out_or  = |in;\n  assign out_xor = ^in;\nendmodule"
+  },
+  {
+    "id": "vector_concatenation",
+    "instruction": "Six 5-bit inputs a..f (30 bits). Four 8-bit outputs w,x,y,z (32 bits). Output is {a,b,c,d,e,f,2'b11}.",
+    "module_declaration": "module top_module( input [4:0] a, b, c, d, e, f, output [7:0] w, x, y, z );",
+    "output": "module top_module( input [4:0] a, b, c, d, e, f, output [7:0] w, x, y, z );\n  assign {w,x,y,z} = {a,b,c,d,e,f,2'b11};\nendmodule"
+  },
+  {
+    "id": "half_adder",
+    "instruction": "Create a half adder. Inputs a,b. Outputs sum, cout.",
+    "module_declaration": "module top_module( input a, input b, output cout, output sum );",
+    "output": "module top_module( input a, input b, output cout, output sum );\n  assign sum  = a ^ b;\n  assign cout = a & b;\nendmodule"
+  },
+  {
+    "id": "full_adder",
+    "instruction": "Create a full adder. Inputs a,b,cin. Outputs sum, cout.",
+    "module_declaration": "module top_module( input a, input b, input cin, output cout, output sum );",
+    "output": "module top_module( input a, input b, input cin, output cout, output sum );\n  assign sum  = a ^ b ^ cin;\n  assign cout = (a & b) | (a & cin) | (b & cin);\nendmodule"
+  },
+  {
+    "id": "mux2_1",
+    "instruction": "Create a 1-bit 2:1 mux. sel=0 chooses a; sel=1 chooses b.",
+    "module_declaration": "module top_module( input a, input b, input sel, output out );",
+    "output": "module top_module( input a, input b, input sel, output out );\n  assign out = sel ? b : a;\nendmodule"
+  },
+  {
+    "id": "mux9_16",
+    "instruction": "Create a 16-bit wide, 9:1 mux. sel=0..8 choose a..i; otherwise out=16'hFFFF.",
+    "module_declaration": "module top_module( input [15:0] a,b,c,d,e,f,g,h,i, input [3:0] sel, output [15:0] out );",
+    "output": "module top_module( input [15:0] a,b,c,d,e,f,g,h,i, input [3:0] sel, output [15:0] out );\n  reg [15:0] r;\n  always @* begin\n    case(sel)\n      4'h0: r = a;\n      4'h1: r = b;\n      4'h2: r = c;\n      4'h3: r = d;\n      4'h4: r = e;\n      4'h5: r = f;\n      4'h6: r = g;\n      4'h7: r = h;\n      4'h8: r = i;\n      default: r = 16'hFFFF;\n    endcase\n  end\n  assign out = r;\nendmodule"
+  },
+  {
+    "id": "thermostat_logic",
+    "instruction": "Thermostat: mode=1 heat if too_cold; mode=0 cool if too_hot; fan whenever heat or cool is on, or fan_on=1.",
+    "module_declaration": "module top_module( input too_cold, input too_hot, input mode, input fan_on, output heater, output aircon, output fan );",
+    "output": "module top_module( input too_cold, input too_hot, input mode, input fan_on, output heater, output aircon, output fan );\n  assign heater =  mode &  too_cold;\n  assign aircon = ~mode &  too_hot;\n  assign fan   = fan_on | heater | aircon;\nendmodule"
+  },
+  {
+    "id": "counter_decade_sync_reset",
+    "instruction": "Decade counter 0..9 with synchronous active-high reset to 0.",
+    "module_declaration": "module top_module( input clk, input reset, output reg [3:0] q );",
+    "output": "module top_module( input clk, input reset, output reg [3:0] q );\n  always @(posedge clk) begin\n    if (reset || q==4'd9) q <= 4'd0;\n    else q <= q + 1'b1;\n  end\nendmodule"
+  },
+  {
+    "id": "dffs_async_reset_8",
+    "instruction": "8 DFFs with active-high asynchronous reset; posedge clk.",
+    "module_declaration": "module top_module( input clk, input areset, input [7:0] d, output reg [7:0] q );",
+    "output": "module top_module( input clk, input areset, input [7:0] d, output reg [7:0] q );\n  always @(posedge clk or posedge areset) begin\n    if (areset) q <= 8'd0;\n    else q <= d;\n  end\nendmodule"
+  }
+]
+

@@ -1,0 +1,402 @@
+[
+  {
+    "instruction": "A 32-bit vector can be viewed as containing 4 bytes (bits [31:24], [23:16], etc.). Build a circuit that will reverse the byte ordering of a 4-byte word.",
+    "module_declaration": "module top_module( input [31:0] in, output [31:0] out );"
+  },
+  {
+    "instruction": "A 32-bit vector can be viewed as containing 4 bytes (bits [31:24], [23:16], etc.). Build a circuit that will reverse the byte ordering of a 4-byte word.",
+    "module_declaration": "module top_module( input [31:0] in, output [31:0] out );"
+  },
+  {
+    "instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.",
+    "module_declaration": "module top_module( input [2:0] a, input [2:0] b, output [2:0] out_or_bitwise, output out_or_logical, output [5:0] out_not );"
+  },
+  {
+    "instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.",
+    "module_declaration": "module top_module( input [2:0] a, input [2:0] b, output [2:0] out_or_bitwise, output out_or_logical, output [5:0] out_not );"
+  },
+  {
+    "instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.",
+    "module_declaration": "module top_module( input [3:0] in, output out_and, output out_or, output out_xor );"
+  },
+  {
+    "instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.",
+    "module_declaration": "module top_module( input [3:0] in, output out_and, output out_or, output out_xor );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module ( input [4:0] a, b, c, d, e, f, output [7:0] w, x, y, z );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module ( input [4:0] a, b, c, d, e, f, output [7:0] w, x, y, z );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module( input a, input b, input c, output out );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module( input a, input b, input c, output out );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module( input a, input b, input c, input d, output out );"
+  },
+  {
+    "instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+    "module_declaration": "module top_module( input a, input b, input c, input d, output out );"
+  },
+  {
+    "instruction": "A heating/cooling thermostat controls both a heater (during winter) and an air conditioner (during summer). Implement a circuit that will turn on and off the heater, air conditioning, and blower fan as appropriate. The thermostat can be in one of two modes: heating (mode = 1) and cooling (mode = 0). In heating mode, turn the heater on when it is too cold (too_cold = 1) but do not use the air conditioner. In cooling mode, turn the air conditioner on when it is too hot (too_hot = 1), but do not turn on the heater. When the heater or air conditioner are on, also turn on the fan to circulate the air. In addition, the user can also request the fan to turn on (fan_on = 1), even if the heater and air conditioner are off. Try to use only assign statements, to see whether you can translate a problem description into a collection of logic gates.",
+    "module_declaration": "module top_module ( input too_cold, input too_hot, input mode, input fan_on, output heater, output aircon, output fan );"
+  },
+  {
+    "instruction": "A heating/cooling thermostat controls both a heater (during winter) and an air conditioner (during summer). Implement a circuit that will turn on and off the heater, air conditioning, and blower fan as appropriate. The thermostat can be in one of two modes: heating (mode = 1) and cooling (mode = 0). In heating mode, turn the heater on when it is too cold (too_cold = 1) but do not use the air conditioner. In cooling mode, turn the air conditioner on when it is too hot (too_hot = 1), but do not turn on the heater. When the heater or air conditioner are on, also turn on the fan to circulate the air. In addition, the user can also request the fan to turn on (fan_on = 1), even if the heater and air conditioner are off. Try to use only assign statements, to see whether you can translate a problem description into a collection of logic gates.",
+    "module_declaration": "module top_module ( input too_cold, input too_hot, input mode, input fan_on, output heater, output aircon, output fan );"
+  },
+  {
+    "instruction": "A 'population count' circuit counts the number of '1's in an input vector. Build a population count circuit for a 3-bit input vector.",
+    "module_declaration": "module top_module( input [2:0] in, output [1:0] out );"
+  },
+  {
+    "instruction": "A 'population count' circuit counts the number of '1's in an input vector. Build a population count circuit for a 3-bit input vector.",
+    "module_declaration": "module top_module( input [2:0] in, output [1:0] out );"
+  },
+  {
+    "instruction": "Create a one-bit wide, 2-to-1 multiplexer. When sel=0, choose a. When sel=1, choose b.",
+    "module_declaration": "module top_module( input a, b, sel, output out );"
+  },
+  {
+    "instruction": "Create a one-bit wide, 2-to-1 multiplexer. When sel=0, choose a. When sel=1, choose b.",
+    "module_declaration": "module top_module( input a, b, sel, output out );"
+  },
+  {
+    "instruction": "Create a 16-bit wide, 9-to-1 multiplexer. sel=0 chooses a, sel=1 chooses b, etc. For the unused cases (sel=9 to 15), set all output bits to '1'.",
+    "module_declaration": "module top_module( input [15:0] a, b, c, d, e, f, g, h, i, input [3:0] sel, output [15:0] out );"
+  },
+  {
+    "instruction": "Create a 16-bit wide, 9-to-1 multiplexer. sel=0 chooses a, sel=1 chooses b, etc. For the unused cases (sel=9 to 15), set all output bits to '1'.",
+    "module_declaration": "module top_module( input [15:0] a, b, c, d, e, f, g, h, i, input [3:0] sel, output [15:0] out );"
+  },
+  {
+    "instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+    "module_declaration": "module top_module( input [1023:0] in, input [7:0] sel, output [3:0] out );"
+  },
+  {
+    "instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+    "module_declaration": "module top_module( input [1023:0] in, input [7:0] sel, output [3:0] out );"
+  },
+  {
+    "instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+    "module_declaration": "module top_module( input [1023:0] in, input [7:0] sel, output [3:0] out );"
+  },
+  {
+    "instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+    "module_declaration": "module top_module ( input [1023:0] in, input [7:0] sel, output [3:0] out );"
+  },
+  {
+    "instruction": "Create a half adder. A half adder adds two bits (with no carry-in) and produces a sum and carry-out.",
+    "module_declaration": "module top_module( input a, b, output cout, sum );"
+  },
+  {
+    "instruction": "Create a half adder. A half adder adds two bits (with no carry-in) and produces a sum and carry-out.",
+    "module_declaration": "module top_module( input a, b, output cout, sum );"
+  },
+  {
+    "instruction": "Create a full adder. A full adder adds three bits (including carry-in) and produces a sum and carry-out.",
+    "module_declaration": "module top_module( input a, b, cin, output cout, sum );"
+  },
+  {
+    "instruction": "Create a full adder. A full adder adds three bits (including carry-in) and produces a sum and carry-out.",
+    "module_declaration": "module top_module( input a, b, cin, output cout, sum );"
+  },
+  {
+    "instruction": "Assume that you have two 8-bit 2's complement numbers, a[7:0] and b[7:0]. These numbers are added to produce s[7:0]. Also compute whether a (signed) overflow has occurred.",
+    "module_declaration": "module top_module ( input [7:0] a, input [7:0] b, output [7:0] s, output overflow );"
+  },
+  {
+    "instruction": "Assume that you have two 8-bit 2's complement numbers, a[7:0] and b[7:0]. These numbers are added to produce s[7:0]. Also compute whether a (signed) overflow has occurred.",
+    "module_declaration": "module top_module ( input [7:0] a, input [7:0] b, output [7:0] s, output overflow );"
+  },
+  {
+    "instruction": "Now that you know how to build a full adder, make 3 instances of it to create a 3-bit binary ripple-carry adder. The adder adds two 3-bit numbers and a carry-in to produce a 3-bit sum and carry out. To encourage you to actually instantiate full adders, also output the carry-out from each full adder in the ripple-carry adder. cout[2] is the final carry-out from the last full adder, and is the carry-out you usually see.",
+    "module_declaration": "module top_module( input [2:0] a, b, input cin, output [2:0] cout, output [2:0] sum );"
+  },
+  {
+    "instruction": "Now that you know how to build a full adder, make 3 instances of it to create a 3-bit binary ripple-carry adder. The adder adds two 3-bit numbers and a carry-in to produce a 3-bit sum and carry out. To encourage you to actually instantiate full adders, also output the carry-out from each full adder in the ripple-carry adder. cout[2] is the final carry-out from the last full adder, and is the carry-out you usually see.",
+    "module_declaration": "module top_module( input [2:0] a, b, input cin, output [2:0] cout, output [2:0] sum );"
+  },
+  {
+    "instruction": "Now that you know how to build a full adder, make 3 instances of it to create a 3-bit binary ripple-carry adder. The adder adds two 3-bit numbers and a carry-in to produce a 3-bit sum and carry out. To encourage you to actually instantiate full adders, also output the carry-out from each full adder in the ripple-carry adder. cout[2] is the final carry-out from the last full adder, and is the carry-out you usually see.",
+    "module_declaration": "module fadd( input a, b, cin, output cout, sum );"
+  },
+  {
+    "instruction": "A single-output digital system with four inputs (a,b,c,d) generates a logic-1 when 2, 7, or 15 appears on the inputs, and a logic-0 when 0, 1, 4, 5, 6, 9, 10, 13, or 14 appears. The input conditions for the numbers 3, 8, 11, and 12 never occur in this system. For example, 7 corresponds to a,b,c,d being set to 0,1,1,1, respectively.Determine the output out_sop in minimum SOP form, and the output out_pos in minimum POS form.",
+    "module_declaration": "module top_module ( input a, input b, input c, input d, output out_sop, output out_pos );"
+  },
+  {
+    "instruction": "A single-output digital system with four inputs (a,b,c,d) generates a logic-1 when 2, 7, or 15 appears on the inputs, and a logic-0 when 0, 1, 4, 5, 6, 9, 10, 13, or 14 appears. The input conditions for the numbers 3, 8, 11, and 12 never occur in this system. For example, 7 corresponds to a,b,c,d being set to 0,1,1,1, respectively.Determine the output out_sop in minimum SOP form, and the output out_pos in minimum POS form.",
+    "module_declaration": "module top_module ( input a, input b, input c, input d, output out_sop, output out_pos );"
+  },
+  {
+    "instruction": "Create 8 D flip-flops with active high asynchronous reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input areset, // active high asynchronous reset input [7:0] d, output [7:0] q );"
+  },
+  {
+    "instruction": "Create 8 D flip-flops with active high asynchronous reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input areset, input [7:0] d, output [7:0] q );"
+  },
+  {
+    "instruction": "Build a 4-bit binary counter that counts from 0 through 15, inclusive, with a period of 16. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous active-high reset output [3:0] q );"
+  },
+  {
+    "instruction": "Build a 4-bit binary counter that counts from 0 through 15, inclusive, with a period of 16. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, output [3:0] q );"
+  },
+  {
+    "instruction": "Build a decade counter that counts from 0 through 9, inclusive, with a period of 10. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous active-high reset output [3:0] q );"
+  },
+  {
+    "instruction": "Build a decade counter that counts from 0 through 9, inclusive, with a period of 10. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, output [3:0] q );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "endmodule",
+    "module_declaration": "module count60( input clk, input reset, input ena, output [7:0] q );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+    "module_declaration": "module top_module( input clk, input reset, input ena, output pm, output [7:0] hh, output [7:0] mm, output [7:0] ss );"
+  },
+  {
+    "instruction": "In this question, you will design a circuit for an 8x1 memory, where writing to the memory is accomplished by shifting-in bits, and reading is \"random access\", as in a typical RAM. You will then use the circuit to realize a 3-input logic function. First, create an 8-bit shift register with 8 D-type flip-flops. Label the flip-flop outputs from Q[0]...Q[7]. The shift register input should be called S, which feeds the input of Q[0] (MSB is shifted in first). The enable input controls whether to shift. Then, extend the circuit to have 3 additional inputs A,B,C and an output Z. The circuit's behaviour should be as follows: when ABC is 000, Z=Q[0], when ABC is 001, Z=Q[1], and so on. Your circuit should contain ONLY the 8-bit shift register, and multiplexers.",
+    "module_declaration": "module top_module ( input clk, input enable, input S, input A, B, C, output Z );"
+  },
+  {
+    "instruction": "In this question, you will design a circuit for an 8x1 memory, where writing to the memory is accomplished by shifting-in bits, and reading is \"random access\", as in a typical RAM. You will then use the circuit to realize a 3-input logic function. First, create an 8-bit shift register with 8 D-type flip-flops. Label the flip-flop outputs from Q[0]...Q[7]. The shift register input should be called S, which feeds the input of Q[0] (MSB is shifted in first). The enable input controls whether to shift. Then, extend the circuit to have 3 additional inputs A,B,C and an output Z. The circuit's behaviour should be as follows: when ABC is 000, Z=Q[0], when ABC is 001, Z=Q[1], and so on. Your circuit should contain ONLY the 8-bit shift register, and multiplexers.",
+    "module_declaration": "module top_module ( input clk, input enable, input S, input A, B, C, output Z );"
+  },
+  {
+    "instruction": "In this question, you will design a circuit for an 8x1 memory, where writing to the memory is accomplished by shifting-in bits, and reading is \"random access\", as in a typical RAM. You will then use the circuit to realize a 3-input logic function. First, create an 8-bit shift register with 8 D-type flip-flops. Label the flip-flop outputs from Q[0]...Q[7]. The shift register input should be called S, which feeds the input of Q[0] (MSB is shifted in first). The enable input controls whether to shift. Then, extend the circuit to have 3 additional inputs A,B,C and an output Z. The circuit's behaviour should be as follows: when ABC is 000, Z=Q[0], when ABC is 001, Z=Q[1], and so on. Your circuit should contain ONLY the 8-bit shift register, and multiplexers.",
+    "module_declaration": "module top_module( input clk, input load, input [255:0] data, output [255:0] q );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module rule ( input [7:0] neigh, input current, output next );"
+  },
+  {
+    "instruction": "endmodule",
+    "module_declaration": "module top_module( input clk, input load, input [255:0] data, output [255:0] q );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module( input clk, input load, input [255:0] data, output [255:0] q );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module( input clk, input load, input [255:0] data, output [255:0] q );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module( input in, input [1:0] state, output [1:0] next_state, output out );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module( input in, input [1:0] state, output [1:0] next_state, output out );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input x, output z );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input x, output z );"
+  },
+  {
+    "instruction": "Consider a finite state machine that is used to control some type of motor. The FSM has inputs x and y, which come from the motor, and produces outputs f and g, which control the motor. There is also a clock input called clk and a reset input called resetn. The FSM has to work as follows. As long as the reset input is asserted, the FSM stays in a beginning state, called state A. When the reset signal is de-asserted, then after the next clock edge the FSM has to set the output f to 1 for one clock cycle. Then, the FSM has to monitor the x input. When x has produced the values 1, 0, 1 in three successive clock cycles, then g should be set to 1 on the following clock cycle. While maintaining g = 1 the FSM has to monitor the y input. If y has the value 1 within at most two clock cycles, then the FSM should maintain g = 1 permanently (that is, until reset). But if y does not become 1 within two clock cycles, then the FSM should set g = 0 permanently (until reset).",
+    "module_declaration": "module top_module ( input clk, input resetn, // active-low synchronous reset input x, input y, output f, output g );"
+  },
+  {
+    "instruction": "Consider a finite state machine that is used to control some type of motor. The FSM has inputs x and y, which come from the motor, and produces outputs f and g, which control the motor. There is also a clock input called clk and a reset input called resetn. The FSM has to work as follows. As long as the reset input is asserted, the FSM stays in a beginning state, called state A. When the reset signal is de-asserted, then after the next clock edge the FSM has to set the output f to 1 for one clock cycle. Then, the FSM has to monitor the x input. When x has produced the values 1, 0, 1 in three successive clock cycles, then g should be set to 1 on the following clock cycle. While maintaining g = 1 the FSM has to monitor the y input. If y has the value 1 within at most two clock cycles, then the FSM should maintain g = 1 permanently (that is, until reset). But if y does not become 1 within two clock cycles, then the FSM should set g = 0 permanently (until reset).",
+    "module_declaration": "module top_module ( input clk, input resetn, // active-low synchronous reset input x, input y, output reg f, output reg g );"
+  },
+  {
+    "instruction": "Build a counter that counts from 0 to 999, inclusive, with a period of 1000 cycles. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, output [9:0] q );"
+  },
+  {
+    "instruction": "Build a counter that counts from 0 to 999, inclusive, with a period of 1000 cycles. The reset input is synchronous, and should reset the counter to 0.",
+    "module_declaration": "module top_module ( input clk, input reset, output [9:0] q );"
+  },
+  {
+    "instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+    "module_declaration": "module top_module ( input clk, input shift_ena, input count_ena, input data, output [3:0] q );"
+  },
+  {
+    "instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+    "module_declaration": "module top_module ( input clk, input shift_ena, input count_ena, input data, output [3:0] q );"
+  },
+  {
+    "instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+    "module_declaration": "module top_module ( input clk, input shift_ena, input count_ena, input data, output [3:0] q );"
+  },
+  {
+    "instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+    "module_declaration": "module top_module ( input clk, input shift_ena, input count_ena, input data, output [3:0] q );"
+  },
+  {
+    "instruction": "Build a finite-state machine that searches for the sequence 1101 in an input bit stream. When the sequence is found, it should set start_shifting to 1, forever, until reset. Getting stuck in the final state is intended to model going to other states in a bigger FSM that is not yet implemented.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input data, output start_shifting );"
+  },
+  {
+    "instruction": "Build a finite-state machine that searches for the sequence 1101 in an input bit stream. When the sequence is found, it should set start_shifting to 1, forever, until reset. Getting stuck in the final state is intended to model going to other states in a bigger FSM that is not yet implemented.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input data, output start_shifting );"
+  },
+  {
+    "instruction": "Build a finite-state machine that searches for the sequence 1101 in an input bit stream. When the sequence is found, it should set start_shifting to 1, forever, until reset. Getting stuck in the final state is intended to model going to other states in a bigger FSM that is not yet implemented.",
+    "module_declaration": "module top_module( input clk, input load, input [1:0] ena, input [99:0] data, output reg [99:0] q );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module( input clk, input load, input [1:0] ena, input [99:0] data, output reg [99:0] q );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module( input clk, input load, input ena, input [1:0] amount, input [63:0] data, output reg [63:0] q );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module( input clk, input load, input ena, input [1:0] amount, input [63:0] data, output reg [63:0] q );"
+  },
+  {
+    "instruction": "Implement a Mealy-type finite state machine that recognizes the sequence \"101\" on an input signal named x. Your FSM should have an output signal, z, that is asserted to logic-1 when the \"101\" sequence is detected. Your FSM should also have an active-low asynchronous reset. You may only have 3 states in your state machine. Your FSM should recognize overlapping sequences.",
+    "module_declaration": "module top_module ( input clk, input aresetn, // Asynchronous active-low reset input x, output z );"
+  },
+  {
+    "instruction": "Implement a Mealy-type finite state machine that recognizes the sequence \"101\" on an input signal named x. Your FSM should have an output signal, z, that is asserted to logic-1 when the \"101\" sequence is detected. Your FSM should also have an active-low asynchronous reset. You may only have 3 states in your state machine. Your FSM should recognize overlapping sequences.",
+    "module_declaration": "module top_module ( input clk, input aresetn, // Asynchronous active-low reset input x, output z );"
+  },
+  {
+    "instruction": "Create 16 D flip-flops. It's sometimes useful to only modify parts of a group of flip-flops. The byte-enable inputs control whether each byte of the 16 registers should be written to on that cycle. byteena[1] controls the upper byte d[15:8], while byteena[0] controls the lower byte d[7:0]. resetn is a synchronous, active-low reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input resetn, input [1:0] byteena, input [15:0] d, output [15:0] q );"
+  },
+  {
+    "instruction": "Create 16 D flip-flops. It's sometimes useful to only modify parts of a group of flip-flops. The byte-enable inputs control whether each byte of the 16 registers should be written to on that cycle. byteena[1] controls the upper byte d[15:8], while byteena[0] controls the lower byte d[7:0]. resetn is a synchronous, active-low reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input resetn, input [1:0] byteena, input [15:0] d, output [15:0] q );"
+  },
+  {
+    "instruction": "Create 16 D flip-flops. It's sometimes useful to only modify parts of a group of flip-flops. The byte-enable inputs control whether each byte of the 16 registers should be written to on that cycle. byteena[1] controls the upper byte d[15:8], while byteena[0] controls the lower byte d[7:0]. resetn is a synchronous, active-low reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input j, input k, output Q );"
+  },
+  {
+    "instruction": "Create 16 D flip-flops. It's sometimes useful to only modify parts of a group of flip-flops. The byte-enable inputs control whether each byte of the 16 registers should be written to on that cycle. byteena[1] controls the upper byte d[15:8], while byteena[0] controls the lower byte d[7:0]. resetn is a synchronous, active-low reset. All DFFs should be triggered by the positive edge of clk.",
+    "module_declaration": "module top_module ( input clk, input j, input k, output Q );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module( input a, input b, input c, input d, output out );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module( input a, input b, input c, input d, output out );"
+  },
+  {
+    "instruction": "\"module_declaration\": \"",
+    "module_declaration": "module top_module ( input clk, input reset, // synchronous reset input w, output z );"
+  },
+  {
+    "instruction": "\"output\": \"",
+    "module_declaration": "module top_module ( input clk, input reset, // synchronous reset input w, output z );"
+  },
+  {
+    "instruction": "Consider a finite state machine with inputs s and w. Assume that the FSM begins in a reset state called A, as depicted below. The FSM remains in state A as long as s = 0, and it moves to state B when s = 1. Once in state B the FSM examines the value of the input w in the next three clock cycles. If w = 1 in exactly two of these clock cycles, then the FSM has to set an output z to 1 in the following clock cycle. Otherwise z has to be 0. The FSM continues checking w for the next three clock cycles, and so on. The timing diagram below illustrates the required values of z for different values of w. Use as few states as possible. Note that the s input is used only in state A, so you need to consider just the w input.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input s, input w, output z );"
+  },
+  {
+    "instruction": "Consider a finite state machine with inputs s and w. Assume that the FSM begins in a reset state called A, as depicted below. The FSM remains in state A as long as s = 0, and it moves to state B when s = 1. Once in state B the FSM examines the value of the input w in the next three clock cycles. If w = 1 in exactly two of these clock cycles, then the FSM has to set an output z to 1 in the following clock cycle. Otherwise z has to be 0. The FSM continues checking w for the next three clock cycles, and so on. The timing diagram below illustrates the required values of z for different values of w. Use as few states as possible. Note that the s input is used only in state A, so you need to consider just the w input.",
+    "module_declaration": "module top_module ( input clk, input reset, // Synchronous reset input s, input w, output z );"
+  },
+  {
+    "instruction": "The PS/2 mouse protocol sends messages that are three bytes long. However, within a continuous byte stream, it's not obvious where messages start and end. The only indication is that the first byte of each three byte message always has bit[3]=1 (but bit[3] of the other two bytes may be 1 or 0 depending on data). We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with bit[3]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done). The FSM should signal done in the cycle immediately after the third byte of each message was successfully received.",
+    "module_declaration": "module top_module( input clk, input [7:0] in, input reset, // Synchronous reset output done );"
+  },
+  {
+    "instruction": "The PS/2 mouse protocol sends messages that are three bytes long. However, within a continuous byte stream, it's not obvious where messages start and end. The only indication is that the first byte of each three byte message always has bit[3]=1 (but bit[3] of the other two bytes may be 1 or 0 depending on data). We want a finite state machine that will search for message boundaries when given an input byte stream. The algorithm we'll use is to discard bytes until we see one with bit[3]=1. We then assume that this is byte 1 of a message, and signal the receipt of a message once all 3 bytes have been received (done). The FSM should signal done in the cycle immediately after the third byte of each message was successfully received.",
+    "module_declaration": "module top_module( input clk, input [7:0] in, input reset, // Synchronous reset output done );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. Implement a Moore state machine with two states, two inputs, and one output (internal to the module) that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, output walk_left, output walk_right );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. Implement a Moore state machine with two states, two inputs, and one output (internal to the module) that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, output walk_left, output walk_right );"
+  },
+  {
+    "instruction": "_description\": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, output walk_left, output walk_right, output aaah );"
+  },
+  {
+    "instruction": "_description\": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, output walk_left, output walk_right, output aaah );"
+  },
+  {
+    "instruction": ": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": ": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": ": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": ": \"The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": "The game Lemmings involves critters with fairly simple brains. So simple that we are going to model it using a finite state machine. In the Lemmings' 2D world, Lemmings can be in one of two states: walking left (walk_left is 1) or walking right (walk_right is 1). It will switch directions if it hits an obstacle. In particular, if a Lemming is bumped on the left (by receiving a 1 on bump_left), it will walk right. If it's bumped on the right (by receiving a 1 on bump_right), it will walk left. If it's bumped on both sides at the same time, it will still switch directions. In addition to walking left and right and changing direction when bumped, when ground=0, the Lemming will fall and say \\\"aaah!\\\". When the ground reappears (ground=1), the Lemming will resume walking in the same direction as before the fall. Being bumped while falling does not affect the walking direction, and being bumped in the same cycle as ground disappears (but not yet falling), or when the ground reappears while still falling, also does not affect the walking direction. In addition to walking and falling, Lemmings can sometimes be told to do useful things, like dig (it starts digging when dig=1). A Lemming can dig if it is currently walking on ground (ground=1 and not falling), and will continue digging until it reaches the other side (ground=0). At that point, since there is no ground, it will fall (aaah!), then continue walking in its original direction once it hits ground again. As with falling, being bumped while digging has no effect, and being told to dig when falling or when there is no ground is ignored. (In other words, a walking Lemming can fall, dig, or switch directions. If more than one of these conditions are satisfied, fall has higher precedence than dig, which has higher precedence than switching directions.) Although Lemmings can walk, fall, and dig, Lemmings aren't invulnerable. If a Lemming falls for too long then hits the ground, it can splatter. In particular, if a Lemming falls for more than 20 clock cycles then hits the ground, it will splatter and cease walking, falling, or digging (all 4 outputs become 0), forever (Or until the FSM gets reset). There is no upper limit on how far a Lemming can fall before hitting the ground. Lemmings only splatter when hitting the ground; they do not splatter in mid-air. Implement a Moore state machine that models this behaviour. areset is positive edge triggered asynchronous reseting the Lemming machine to walk left.",
+    "module_declaration": "module top_module( input clk, input areset, // Freshly brainwashed Lemmings walk left. input bump_left, input bump_right, input ground, input dig, output walk_left, output walk_right, output aaah, output digging );"
+  },
+  {
+    "instruction": "Given the follow state machine with 1 input and 2 outputs (the outputs are given as \\\"(out1, out2)\\\"):\\n\\n// S0 (0, 0) --0--> S0\\n// S0 (0, 0) --1--> S1\\n// S1 (0, 0) --0--> S0\\n// S1 (0, 0) --1--> S2\\n// S2 (0, 0) --0--> S0\\n// S2 (0, 0) --1--> S3\\n// S3 (0, 0) --0--> S0\\n// S3 (0, 0) --1--> S4\\n// S4 (0, 0) --0--> S0\\n// S4 (0, 0) --1--> S5\\n// S5 (0, 0) --0--> S8\\n// S5 (0, 0) --1--> S6\\n// S6 (0, 0) --0--> S9\\n// S6 (0, 0) --1--> S7\\n// S7 (0, 1) --0--> S0\\n// S7 (0, 1) --1--> S7\\n// S8 (1, 0) --0--> S0\\n// S8 (1, 0) --1--> S1\\n// S9 (1, 1) --0--> S0\\n// S9 (1, 1) --1--> S1\\n\\n// Suppose this state machine uses one-hot encoding, where state[0] through state[9] correspond to the states S0 though S9, respectively. The outputs are zero unless otherwise specified.\\n\\n// Write Verilog implementing the state transition logic and output logic portions of the state machine (but not the state flip-flops). You are given the current state in state[9:0] and must produce next_state[9:0] and the two outputs. Derive the logic equations by inspection assuming a one-hot encoding.",
+    "module_declaration": "module top_module( input in, input [9:0] state, output [9:0] next_state, output out1, output out2 );"
+  }
+]

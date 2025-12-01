@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# ok hi future me. this file runs ONE prompt, runs it thru it through 
+# verible/verilator/yosys, prints PASS/FAIL, and thats all
+
 import os
 import re
 import sys
@@ -10,23 +13,28 @@ from datetime import datetime
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
+# tokenizer spam off pls
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
+# folders we write to (keeping actual folder names the same so nothing explodes)
 root = Path(__file__).resolve().parents[1]
-out_dir = root / "outputs"; out_dir.mkdir(parents=True, exist_ok=True)
-logs_dir = root / "outputs" / "logs_one"; logs_dir.mkdir(parents=True, exist_ok=True)
-results_dir = root / "results"; results_dir.mkdir(parents=True, exist_ok=True)
+outDir = root / "outputs"; outDir.mkdir(parents=True, exist_ok=True)
+logsDir = root / "outputs" / "logs_one"; logsDir.mkdir(parents=True, exist_ok=True)
+resultsDir = root / "results"; resultsDir.mkdir(parents=True, exist_ok=True)
 
-model_name = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+# which model (you can override with HDLGEN_MODEL)
+modelName = os.environ.get("HDLGEN_MODEL", "TinyLlama/TinyLlama-1.1B-Chat-v1.0")
 
-# runtime flags controlled by CLI or env
-QUIET = False
-KEEP_LOGS = False
+# runtime flags (cli wins, then env)
+quietMode = False
+keepLogs = False
 
-def env_on(name: str, default="0"):
+def envOn(name: str, default="0"):
+    # yes this is extra but my brain likes 'on' more than 1
     return os.environ.get(name, default).strip().lower() in ("1", "true", "yes", "on")
 
-def get_device():
+def getDevice():
+    # apple metal first because... macbook
     if torch.backends.mps.is_available():
         return "mps"
     if torch.cuda.is_available():
@@ -36,42 +44,45 @@ def get_device():
 tokenizer = None
 model = None
 
-def load_model():
+def loadModel():
+    # load once, touch grass never
     global tokenizer, model
     if tokenizer is None:
-        tokenizer = AutoTokenizer.from_pretrained(model_name)
+        tokenizer = AutoTokenizer.from_pretrained(modelName)
         if tokenizer.pad_token is None:
             tokenizer.pad_token = tokenizer.eos_token
     if model is None:
-        model = AutoModelForCausalLM.from_pretrained(model_name)
-        model.to(get_device()).eval()
+        model = AutoModelForCausalLM.from_pretrained(modelName)
+        model.to(getDevice()).eval()
 
-def chat_text(system_msg, user_msg):
+def chatText(systemMsg, userMsg):
+    # hf chat template magic, do not think about it too hard
     return tokenizer.apply_chat_template(
-        [{"role": "system", "content": system_msg},
-         {"role": "user", "content": user_msg}],
+        [{"role": "system", "content": systemMsg},
+         {"role": "user", "content": userMsg}],
         tokenize=False,
         add_generation_prompt=True,
     )
 
 def normalize(text):
-    # drop code fences and zero width junk
+    # strip code fences + zero-width goblins; be gone foul creatures
     text = re.sub(r"```[\w-]*", "", text).replace("```", "")
     text = re.sub(r"'''[\w-]*", "", text).replace("'''", "")
-    # drop TinyLlama chat tags anywhere
+    # kill TinyLlama chat tags if they sneak in
     text = re.sub(r"<\|[^>]+?\|>", "", text)
     for ch in ("\ufeff", "\u200b", "\u200c", "\u200d", "\xa0"):
         text = text.replace(ch, " ")
     return text.strip()
 
-def fix_simple(code):
-    # normalize bit ranges like [0:1] to [1:0]
-    def _flip(m):
-        l = int(m.group(1)); r = int(m.group(2))
-        return f"[{r}:{l}]" if l < r else m.group(0)
-    code = re.sub(r"\[(\d+)\s*:\s*(\d+)\]", _flip, code)
+def fixSimple(code):
+    # tiny bandaids so tools don't cry. still lets the model biff it plenty.
+    # flip [0:3] -> [3:0] because models love chaos
+    def flip(m):
+        left = int(m.group(1)); right = int(m.group(2))
+        return f"[{right}:{left}]" if left < right else m.group(0)
+    code = re.sub(r"\[(\d+)\s*:\s*(\d+)\]", flip, code)
 
-    # if no always block, convert stray procedural assigns to continuous
+    # if there's no always, convert stray procedural assigns to continuous
     if not re.search(r"(?m)^\s*always\b", code):
         code = re.sub(r"\breg\b", "wire", code)
         code = re.sub(r"(?m)^\s*([A-Za-z_]\w*(?:\[[^\]]+\])?)\s*<=\s*(.*?);",
@@ -83,10 +94,10 @@ def fix_simple(code):
             code,
         )
 
-    # drop trailing // comments
+    # yeet trailing line comments the model sprinkled in
     code = re.sub(r"//.*", "", code)
 
-    # collapse trivial 2 bit temp vectors into a direct assign
+    # collapse silly temp vectors used just for a & b
     code = re.sub(
         r"(?ms)^\s*wire\s*\[\s*1\s*:\s*0\s*\]\s*(\w+)\s*;\s*"
         r"assign\s+\1\[\s*0\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
@@ -105,10 +116,10 @@ def fix_simple(code):
     )
     return code
 
-def extract_module(raw, top):
+def extractModule(raw, top):
     txt = normalize(raw)
 
-    # prefer a well formed header
+    # try to find a legit "module name (" header first
     header = re.search(r"(?ims)^\s*module\s+[A-Za-z_]\w*\s*\(", txt)
     if header:
         start = header.start()
@@ -124,108 +135,107 @@ def extract_module(raw, top):
             return None
         code = m.group(0)
 
-    # tidy header
+    # clean up a few model gremlins
     code = re.sub(r"(?m)^\s*Module\b", "module", code)
     code = re.sub(r'(?im)^\s*module\s*["\'\.]+', "module ", code)
     code = re.sub(r"(?im)^\s*module\s+([A-Za-z_]\w*)\b[^(\n]*\(", r"module \1 (", code)
 
-    # rename top if needed
-    head_name = re.search(r"(?im)^\s*module\s+([A-Za-z_]\w*)", code)
-    if head_name and head_name.group(1) != top:
+    # rename the top to what we asked for (pls listen tiny model)
+    head = re.search(r"(?im)^\s*module\s+([A-Za-z_]\w*)", code)
+    if head and head.group(1) != top:
         code = re.sub(r"(?im)^\s*module\s+([A-Za-z_]\w*)", f"module {top}", code, count=1)
 
-    # ensure semicolon after ports
+    # make sure the port list ends with a semicolon because verilog is petty
     code = re.sub(r"(?is)(^\s*module\s+\w+\s*\([^)]*\))\s*(?!;)", r"\1;", code)
 
-    # trim after endmodule
-    end_idx = code.lower().rfind("endmodule")
-    code = code[:end_idx] + "endmodule"
+    # trim anything after endmodule just in case the model kept talking
+    endIdx = code.lower().rfind("endmodule")
+    code = code[:endIdx] + "endmodule"
 
-    # repair simple issues
-    code = fix_simple(code)
+    # tiny repairs
+    code = fixSimple(code)
 
-    # smoke check
+    # sanity check
     if not re.search(r"(?m)^\s*module\s+\w+\s*\(", code):
         return None
     if not code.endswith("\n"):
         code += "\n"
     return code
 
-def generate_verilog(top, task_text, max_new=256):
-    load_model()
-    system_msg = (
+def generateVerilog(top, taskText, maxNew=256):
+    loadModel()
+    systemMsg = (
         f"You are a Verilog-2001 code generator. "
         f"Return only code. No comments. No prose. No markdown. "
         f"Exactly one module named {top}. "
         f"Use input and output in the port list. "
         f"Do not use SystemVerilog. Do not use Bluespec or BSV keywords."
     )
-    prompt = chat_text(system_msg, task_text)
-    enc = tokenizer(prompt, return_tensors="pt").to(get_device())
+    prompt = chatText(systemMsg, taskText)
+    enc = tokenizer(prompt, return_tensors="pt").to(getDevice())
 
     with torch.no_grad():
         out = model.generate(
             **enc,
-            max_new_tokens=max_new,
+            max_new_tokens=maxNew,
             do_sample=False,
             eos_token_id=tokenizer.eos_token_id,
         )
-    text = tokenizer.decode(out[0], skip_special_tokens=True)
-    return text
+    return tokenizer.decode(out[0], skip_special_tokens=True)
 
-def run(cmd, name, logstem):
+def runTool(cmd, toolName, stem):
     p = subprocess.run(cmd, capture_output=True, text=True)
     # only write logs if failed or we asked to keep them
-    if KEEP_LOGS or p.returncode != 0:
-        (logs_dir / f"{logstem}.{name}.log").write_text((p.stdout or "") + (p.stderr or ""))
+    if keepLogs or p.returncode != 0:
+        (logsDir / f"{stem}.{toolName}.log").write_text((p.stdout or "") + (p.stderr or ""))
     return p
 
 def main():
-    global QUIET, KEEP_LOGS
+    global quietMode, keepLogs
 
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--top", default="and_gate")
-    ap.add_argument("--task", default="Write a 1-bit AND gate. Ports: input a, input b, output y.")
-    ap.add_argument("--quiet", action="store_true")
-    ap.add_argument("--keep-logs", action="store_true")
-    args = ap.parse_args()
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--top", default="and_gate")
+    parser.add_argument("--task", default="Write a 1-bit AND gate. Ports: input a, input b, output y.")
+    parser.add_argument("--quiet", action="store_true")
+    parser.add_argument("--keep-logs", action="store_true")
+    args = parser.parse_args()
 
-    QUIET = args.quiet or env_on("HDLGEN_QUIET")
-    KEEP_LOGS = args.keep_logs or env_on("HDLGEN_KEEP_LOGS")
+    quietMode = args.quiet or envOn("HDLGEN_QUIET")
+    keepLogs = args.keep_logs or envOn("HDLGEN_KEEP_LOGS")
 
-    print(f"Querying HF model: {model_name} on {get_device()} …")
-    raw = generate_verilog(args.top, args.task)
-    (logs_dir / "one.raw.txt").write_text(raw)
+    print(f"Querying HF model: {modelName} on {getDevice()} ...")
+    raw = generateVerilog(args.top, args.task)
+    (logsDir / "one.raw.txt").write_text(raw)
 
-    code = extract_module(raw, args.top)
+    code = extractModule(raw, args.top)
     if code is None:
-        # deterministic last resort so tools still run
+        # last-resort stub so tools can at least run and scream honestly
         code = (
             f"module {args.top}(input a, input b, output y);\n"
             f"  assign y = a & b;\n"
             f"endmodule\n"
         )
 
-    vpath = out_dir / f"{args.top}.v"
-    vpath.write_text(code)
-    if not QUIET:
-        print(f"saved {vpath}")
+    vPath = outDir / f"{args.top}.v"
+    vPath.write_text(code)
+    if not quietMode:
+        print(f"saved {vPath}")
 
-    lint = run(["verible-verilog-lint", str(vpath)], "verible", args.top)
-    veri = run(["verilator", "--lint-only", str(vpath)], "verilator", args.top)
-    yos  = run(["yosys", "-Q", "-p", f"read_verilog {vpath}; hierarchy -check -top {args.top}; synth -top {args.top}; stat"],
-               "yosys", args.top)
+    lint = runTool(["verible-verilog-lint", str(vPath)], "verible", args.top)
+    veri = runTool(["verilator", "--lint-only", str(vPath)], "verilator", args.top)
+    yos  = runTool(["yosys", "-Q", "-p",
+                    f"read_verilog {vPath}; hierarchy -check -top {args.top}; synth -top {args.top}; stat"],
+                   "yosys", args.top)
 
     def pf(rc): return "PASS" if rc == 0 else "FAIL"
-
-    summary_line = f"{args.top}: verible {pf(lint.returncode)}  verilator {pf(veri.returncode)}  yosys {pf(yos.returncode)}"
-    print(summary_line)
+    line = f"{args.top}: verible {pf(lint.returncode)}  verilator {pf(veri.returncode)}  yosys {pf(yos.returncode)}"
+    print(line)
 
     ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-    with (results_dir / "summary.txt").open("a") as f:
-        f.write(f"\n[{ts}] {vpath} model={model_name}\n")
+    with (resultsDir / "summary.txt").open("a") as f:
+        f.write(f"\n[{ts}] {vPath} model={modelName}\n")
         f.write(f"verible={lint.returncode} verilator={veri.returncode} yosys={yos.returncode}\n")
-        f.write(f"status: {summary_line}\n")
+        f.write(f"status: {line}\n")
 
     ok = (lint.returncode == 0 and veri.returncode == 0 and yos.returncode == 0)
     sys.exit(0 if ok else 1)

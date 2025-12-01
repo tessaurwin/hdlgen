@@ -1,0 +1,149 @@
+[{"id": "step_one", 
+	"instruction": "Build a circuit with no inputs and one output. That output should always drive 1 (or logic high).", 
+	"module_declaration": "module top_module( output one );", 
+	"output_path": "train/step_one.v"
+},{"id": "zero", 
+	"instruction": "Build a circuit that always outputs a LOW.", 
+	"module_declaration": "module top_module( output zero );", 
+	"output_path": "train/zero.v"
+},{"id": "wire", 
+	"instruction": "Create a module with one input and one output that behaves like a wire.", 
+	"module_declaration": "module top_module( input in, output out );", 
+	"output_path": "train/wire.v"
+},{"id": "wire4", 
+	"instruction": "Create a module with 3 inputs and 4 outputs that behaves like wires that makes these connections: a -> w\n// ; b -> x; b -> y; c -> z.", 
+	"module_declaration": "module top_module( input a,b,c, output w,x,y,z );", 
+	"output_path": "train/wire4.v"
+},{"id": "notgate", 
+	"instruction": "Create a module that implements a NOT gate.", 
+	"module_declaration": "module top_module( input in, output out );", 
+	"output_path": "train/notgate.v"
+},{"id": "andgate", 
+	"instruction": "Create a module that implements an AND gate.", 
+	"module_declaration": "module top_module( input a, input b, output out );", 
+	"output_path": "train/andgate.v"
+},{"id": "norgate", 
+	"instruction": "Create a module that implements a NOR gate.", 
+	"module_declaration": "module top_module( input a, input b, output out );", 
+	"output_path": "train/norgate.v"
+},{"id": "xnorgate", 
+	"instruction": "Create a module that implements an XNOR gate.", 
+	"module_declaration": "module top_module( input a, input b, output out );", 
+	"output_path": "train/xnorgate.v"
+},{"id": "wire_decl", 
+	"instruction": "Implement the following circuit. Create two intermediate wires (named anything you want) to connect the AND and OR gates together. Note that the wire that feeds the NOT gate is really wire `out`, so you do not necessarily need to declare a third wire here. Notice how wires are driven by exactly one source (output of a gate), but can feed multiple inputs.\n\n// The circuit is composed of two layers. The first layer, counting from the input, is two AND gates: one whose input is connected to a and b, and the second is connected to c and d. The second layer there is an OR gate to OR the two AND outputs, connected the output 'out'. Additionally, there is an inverted output 'out_n'.", 
+	"module_declaration": "`default_nettype none \n module top_module( input a, input b, input c, input d, output out, output out_n );", 
+	"output_path": "train/wire_decl.v"
+},{"id": "7458", 
+	"instruction": "The 7458 is a chip with four AND gates and two OR gates. Create a module in Verilog with the same functionality as the 7458 chip. It has 10 inputs and 2 outputs. You may choose to use an `assign` statement to drive each of the output wires, or you may choose to declare (four) wires for use as intermediate signals, where each internal wire is driven by the output of one of the AND gates.\n\n// In this circuit, p1y should be the OR of two 3-input AND gates: one that ANDs p1a, p1b, and p1c, and the second that ANDs p1d, p1e, and p1f. The output p2y is the OR of two 2-input AND gates: one that ANDs p2a and p2b, and the second that ANDs p2c and p2d.", 
+	"module_declaration": "module top_module ( input p1a, p1b, p1c, p1d, p1e, p1f, output p1y, input p2a, p2b, p2c, p2d, output p2y );", 
+	"output_path": "train/7458.v"
+},{"id": "vector0", 
+	"instruction": "Build a circuit that has one 3-bit input, then outputs the same vector, and also splits it into three separate 1-bit outputs. Connect output o0 to the input vector's position 0, o1 to position 1, etc.", 
+	"module_declaration": "module top_module ( input wire [2:0] vec, output wire [2:0] outv, output wire o2, output wire o1, output wire o0 );", 
+	"output_path": "train/vector0.v"
+},{"id": "vector1", 
+	"instruction": "Build a combinational circuit that splits an input half-word (16 bits, [15:0] ) into lower [7:0] and upper [15:8] bytes.", 
+	"module_declaration": "`default_nettype none     // Disable implicit nets. Reduces some types of bugs.\n module top_module( input wire [15:0] in, output wire [7:0] out_hi, output wire [7:0] out_lo );", 
+	"output_path": "train/vector1.v"
+},{"id": "vector2", 
+	"instruction": "Build a circuit that reverses the byte order of a 32-bit vector.", 
+	"module_declaration": "module top_module( input [31:0] in, output [31:0] out );", 
+	"output_path": "train/vector2.v"
+},{"id": "vectorgates", 
+	"instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.", 
+	"module_declaration": "module top_module( input [2:0] a, input [2:0] b, output [2:0] out_or_bitwise, output out_or_logical, output [5:0] out_not );", 
+	"output_path": "train/vectorgates.v"
+},{"id": "gates4", 
+	"instruction": "Build a combinational circuit with four inputs, in[3:0]. There are 3 outputs: \n// (1) out_and: output of a 4-input AND gate. \n// (2) out_or: output of a 4-input OR gate. \n// (3) out_xor: output of a 4-input XOR gate.\n", 
+	"module_declaration": "module top_module( input [3:0] in, output out_and, output out_or, output out_xor );", 
+	"output_path": "train/gates4.v"
+},{"id": "vector3", 
+	"instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits (the two 1 bits should be in the LSB positions).", 
+	"module_declaration": "module top_module ( input [4:0] a, b, c, d, e, f, output [7:0] w, x, y, z );", 
+	"output_path": "train/vector3.v"
+},{"id": "vectorr", 
+	"instruction": "Given an 8-bit input vector [7:0], reverse its bit ordering.", 
+	"module_declaration": "module top_module( input [7:0] in, output [7:0] out );", 
+	"output_path": "train/vectorr.v"
+},{"id": "vector4", 
+	"instruction": "One common place to see a replication operator is when sign-extending a smaller number to a larger one, while preserving its signed value. This is done by replicating the sign bit (the most significant bit) of the smaller number to the left. For example, sign-extending 4'b0101 (5) to 8 bits results in 8'b00000101 (5), while sign-extending 4'b1101 (-3) to 8 bits results in 8'b11111101 (-3). Build a circuit that sign-extends an 8-bit number to 32 bits. This requires a concatenation of 24 copies of the sign bit (i.e., replicate bit[7] 24 times) followed by the 8-bit number itself.", 
+	"module_declaration": "module top_module ( input [7:0] in, output [31:0] out );", 
+	"output_path": "train/vector4.v"
+},{"id": "vector5", 
+	"instruction": "Given five 1-bit signals (a, b, c, d, and e), compute all 25 pairwise one-bit comparisons in the 25-bit output vector. The output should be 1 if the two bits being compared are equal. Example: out[24] = ~a ^ a; out[23] = ~a ^ b; out[22] = ~a ^ c; ... out[ 1] = ~e ^ d; out[ 0] = ~e ^ e.", 
+	"module_declaration": "module top_module ( input a, b, c, d, e, output [24:0] out );", 
+	"output_path": "train/vector5.v"
+},{"id": "alwaysblock1", 
+	"instruction": "Build an AND gate using both an assign statement and a combinational always block. ", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module( input a, input b, output wire out_assign, output reg out_alwaysblock );", 
+	"output_path": "train/alwaysblock1.v"
+},{"id": "alwaysblock2", 
+	"instruction": "Build an XOR gate three ways, using an assign statement (output out_assign), a combinational always block (output out_always_comb), and a clocked always block (output out_always_ff). Note that the clocked always block produces a different circuit from the other two: There is a flip-flop so the output is delayed.", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module( input clk, input a, input b, output wire out_assign, output reg out_always_comb, output reg out_always_ff );", 
+	"output_path": "train/alwaysblock2.v"
+},{"id": "always_if", 
+	"instruction": "Build a 2-to-1 mux that chooses between a and b. Choose b if both sel_b1 and sel_b2 are true. Otherwise, choose a. Do the same twice, once using assign statements and once using a procedural if statement.", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module( input a, input b, input sel_b1, input sel_b2, output wire out_assign, output reg out_always );", 
+	"output_path": "train/always_if.v"
+},{"id": "always_if2", 
+	"instruction": "Fix any and all bugs in this code:\n\n// module top_module (\n//     input      cpu_overheated,\n//     output reg shut_off_computer,\n//     input      arrived,\n//     input      gas_tank_empty,\n//     output reg keep_driving  ); //\n\n//     always @(*) begin\n//         if (cpu_overheated)\n//            shut_off_computer = 1;\n//     end\n\n//     always @(*) begin\n//         if (~arrived)\n//            keep_driving = ~gas_tank_empty;\n//     end\n\n// endmodule\n", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module ( input cpu_overheated, output reg shut_off_computer, input arrived, input gas_tank_empty, output reg keep_driving );", 
+	"output_path": "train/always_if2.v"
+},{"id": "always_case", 
+	"instruction": "Create a 6-to-1 multiplexer. When sel is between 0 and 5, choose the corresponding data input. Otherwise, output 0. The data inputs and outputs are all 4 bits wide.", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module ( input [2:0] sel, input [3:0] data0, input [3:0] data1, input [3:0] data2, input [3:0] data3, input [3:0] data4, input [3:0] data5, output reg [3:0] out );", 
+	"output_path": "train/always_case.v"
+},{"id": "always_case2", 
+	"instruction": "A priority encoder is a combinational circuit that, when given an input bit vector, outputs the position of the first 1 bit in the vector. For example, a 8-bit priority encoder given the input 8'b10010000 would output 3'd4, because bit[4] is first bit that is high. Build a 4-bit priority encoder. For this problem, if none of the input bits are high (i.e., input is zero), output zero. Note that a 4-bit number has 16 possible combinations.", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module ( input [3:0] in, output reg [1:0] pos  );", 
+	"output_path": "train/always_case2.v"
+},{"id": "always_casez", 
+	"instruction": "Build a priority encoder for 8-bit inputs. Given an 8-bit vector, the output should report the first (least significant) bit in the vector that is 1. Report zero if the input vector has no bits that are high. For example, the input 8'b10010000 should output 3'd4, because bit[4] is first bit that is high.", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module ( input [7:0] in, output reg [2:0] pos );", 
+	"output_path": "train/always_casez.v"
+},{"id": "always_nolatches", 
+	"instruction": "Suppose you're building a circuit to process scancodes from a PS/2 keyboard for a game. Given the last two bytes of scancodes received, you need to indicate whether one of the arrow keys on the keyboard have been pressed. This involves a fairly simple mapping, which can be implemented as a case statement (or if-elseif) with four cases.\n// Scancode[15:0] | Arrow key\n// 16'he06b | left arrow\n// 16'he072 | down arrow\n// 16'he074 | right arrow\n// 16'he075 | up arrow\n// Anything else | none\n// Your circuit has one 16-bit input, and four outputs. Build this circuit that recognizes these four scancodes and asserts the correct output.\n\n", 
+	"module_declaration": "// synthesis verilog_input_version verilog_2001 \nmodule top_module ( input [15:0] scancode, output reg left, output reg down, output reg right, output reg up );", 
+	"output_path": "train/always_nolatches.v"
+},{"id": "conditional", 
+	"instruction": "Given four unsigned numbers, find the minimum. Unsigned numbers can be compared with standard comparison operators (a < b). ", 
+	"module_declaration": "module top_module ( input [7:0] a, b, c, d, output [7:0] min);", 
+	"output_path": "train/conditional.v"
+},{"id": "reduction", 
+	"instruction": "Parity checking is often used as a simple method of detecting errors when transmitting data through an imperfect channel. Create a circuit that will compute a parity bit for a 8-bit byte (which will add a 9th bit to the byte). We will use \"even\" parity, where the parity bit is just the XOR of all 8 data bits.", 
+	"module_declaration": "module top_module ( input [7:0] in, output parity );", 
+	"output_path": "train/reduction.v"
+},{"id": "gates100", 
+	"instruction": "Build a combinational circuit with 100 inputs, in[99:0]. There are 3 outputs: \n// (1) out_and: output of a 100-input AND gate. \n// (2) out_or: output of a 100-input OR gate. \n// (3) out_xor: output of a 100-input XOR gate.\n\n", 
+	"module_declaration": "module top_module( input [99:0] in, output out_and, output out_or, output out_xor );", 
+	"output_path": "train/gates100.v"
+},{"id": "vector100r", 
+	"instruction": "Given a 100-bit input vector [99:0], reverse its bit ordering.", 
+	"module_declaration": "module top_module( input [99:0] in, output [99:0] out );", 
+	"output_path": "train/vector100r.v"
+},{"id": "popcount255", 
+	"instruction": "A \"population count\" circuit counts the number of '1's in an input vector. Build a population count circuit for a 255-bit input vector.", 
+	"module_declaration": "module top_module( input [254:0] in, output [7:0] out );", 
+	"output_path": "train/popcount255.v"
+},{"id": "m2014_q4h", 
+	"instruction": "The module assigns the output port to the same value as the input port combinationally.", 
+	"module_declaration": "module top_module ( input in, output out);", 
+	"output_path": "train/m2014_q4h.v"
+},{"id": "m2014_q4i", 
+	"instruction": "Build a circuit with no inputs and one output. That output should always drive 0 (or logic low).", 
+	"module_declaration": "module top_module ( output out);", 
+	"output_path": "train/m2014_q4i.v"
+},{"id": "m2014_q4e", 
+	"instruction": "Implement a 2-input NOR gate.", 
+	"module_declaration": "module top_module ( input in1, input in2, output out);", 
+	"output_path": "train/m2014_q4e.v"
+},{"id": "m2014_q4f", 
+	"instruction": "Implement the following circuit in Verilog. Two inputs (in1 and in2) go to an AND gate, but the in2 input to the AND gate has a bubble. The output of the AND gate is connected to 'out'.", 
+	"module_declaration": "module top_module ( input in1, input in2, output out);", 
+	"output_path": "train/m2014_q4f.v"
+},{"id": "m2014_q4g", 
+	"instruction": "Implement in Verilog the following circuit: A two-input XNOR (connected to 'in1' and 'in2) has an output connected to the input of a two-input XOR. The second input of the XOR is 'in3.' The output of the XOR is 'out'.", 
+	"module_declaration": "module top_module (input in1, input in2, input in3, output out);", 
+	"output_path": "train/m2014_q4g.v"
+}]

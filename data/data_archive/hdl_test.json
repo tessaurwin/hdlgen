@@ -1,0 +1,43 @@
+[
+  {
+    "id": "mux256_4",
+    "instruction": "Create a 4-bit wide 256:1 mux. in[1023:0] packs 256 4-bit inputs. sel picks the 4-bit slice (sel*4 +: 4).",
+    "module_declaration": "module top_module( input [1023:0] in, input [7:0] sel, output [3:0] out );"
+  },
+  {
+    "id": "popcount3",
+    "instruction": "Population count for a 3-bit input vector in[2:0]. Output a 2-bit count.",
+    "module_declaration": "module top_module( input [2:0] in, output [1:0] out );"
+  },
+  {
+    "id": "mealy_101",
+    "instruction": "Mealy FSM recognizing sequence 101 on x with overlapping allowed. Active-low async reset aresetn. Output z=1 on detect.",
+    "module_declaration": "module top_module( input clk, input aresetn, input x, output z );"
+  },
+  {
+    "id": "lfsr32_galois",
+    "instruction": "32-bit Galois LFSR with taps at 32,22,2,1. Synchronous active-high reset to q=32'h1.",
+    "module_declaration": "module top_module( input clk, input reset, output [31:0] q );"
+  },
+  {
+    "id": "ps2_packet_fsm",
+    "instruction": "FSM to find 3-byte PS/2 messages where byte1 has in[3]=1. Discard until first byte with in[3]=1, then signal done after 3 bytes.",
+    "module_declaration": "module top_module( input clk, input [7:0] in, input reset, output done );"
+  },
+  {
+    "id": "jk_from_d",
+    "instruction": "Implement JK flip-flop using one D flip-flop and gates. Inputs j,k,clk; output Q. Use Qold before the posedge.",
+    "module_declaration": "module top_module( input clk, input j, input k, output Q );"
+  },
+  {
+    "id": "comb_waveform_51",
+    "instruction": "Combinational circuit from waveform truth: q is 1 when (a or b) and (c or d) for the given timing table.",
+    "module_declaration": "module top_module( input a, input b, input c, input d, output q );"
+  },
+  {
+    "id": "fsm_onehot_equations",
+    "instruction": "One-hot FSM with states S0..S9 (state[9:0]). Produce next_state and out1/out2 by inspection.",
+    "module_declaration": "module top_module( input in, input [9:0] state, output [9:0] next_state, output out1, output out2 );"
+  }
+]
+

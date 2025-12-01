@@ -1,0 +1,5 @@
+FROM tinyllama:1.1b
+# kill any chat template; just pass the prompt straight through
+TEMPLATE "{{ .Prompt }}"
+# keep it deterministic
+PARAMETER temperature 0

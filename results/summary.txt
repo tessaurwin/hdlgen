@@ -17,3 +17,106 @@ Verible: 1, Verilator: 1
 
 [20251030_231705] ../outputs/gen_20251030_231705.v
 Verible: 1, Verilator: 1
+
+[20251031_143711] ../outputs/gen_20251031_143711.v
+Verible: 1, Verilator: 0
+
+[20251129_183202] ../outputs/gen_20251129_183202.v
+Verible: 1, Verilator: 1
+
+[20251129_213334] ../outputs/gen_20251129_213334.v
+Verible: 1, Verilator: 0
+
+[20251130_000329] ../outputs/gen_20251130_000329.v
+Verible: 1, Verilator: 0
+
+[20251130_000330] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_000330.v
+verible=1 verilator=0 yosys=0
+
+[20251130_002456] ../outputs/gen_20251130_002456.v
+Verible: 1, Verilator: 1
+
+[20251130_002504] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_002504.v
+verible=1 verilator=0 yosys=0
+
+[20251130_173444] ../outputs/gen_20251130_173444.v
+Verible: 0, Verilator: 1
+
+[20251130_173447] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_173447.v
+verible=1 verilator=0 yosys=0
+
+[20251130_190633] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_190633.v
+verible=1 verilator=0 yosys=0
+
+[20251130_192011] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_192011.v
+verible=0 verilator=1 yosys=1
+
+[20251130_192839] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_192839.v
+verible=0 verilator=1 yosys=1
+
+[20251130_201824] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_201824.v
+verible=0 verilator=1 yosys=1
+
+[20251130_203349] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_203349.v
+verible=0 verilator=1 yosys=1
+
+[20251130_204225] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_204225.v
+verible=0 verilator=1 yosys=1
+
+[20251130_205650] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_205650.v model=codellama:7b-instruct
+verible=1 verilator=0 yosys=0
+
+[20251130_210820] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate_20251130_210820.v model=codellama:7b-instruct
+verible=1 verilator=0 yosys=0
+
+[20251130_221357] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=1
+
+[20251130_224644] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=0 yosys=0
+
+[20251130_225907] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+
+[20251130_231716] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+
+[20251130_232522] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+
+[20251130_233840] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=1
+
+[20251201_000103] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=1
+
+[20251201_001657] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=1
+
+[20251201_002203] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=1
+
+[20251201_002619] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=1 verilator=1 yosys=0
+
+[20251201_003139] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+
+[20251201_003855] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+
+[20251201_005202] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+status: and_gate: verible PASS  verilator PASS  yosys PASS
+
+[20251201_021833] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+status: and_gate: verible PASS  verilator PASS  yosys PASS
+
+[20251201_022108] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+status: and_gate: verible PASS  verilator PASS  yosys PASS
+
+[20251201_022143] /Users/tessamaeurwin/Desktop/hdlgen/outputs/and_gate.v model=TinyLlama/TinyLlama-1.1B-Chat-v1.0
+verible=0 verilator=0 yosys=0
+status: and_gate: verible PASS  verilator PASS  yosys PASS

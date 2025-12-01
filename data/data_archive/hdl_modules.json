@@ -1,0 +1,1310 @@
+[
+	{
+		"id": "vector_part_select",
+		"instruction": "A 32-bit vector can be viewed as containing 4 bytes (bits [31:24], [23:16], etc.). Build a circuit that will reverse the byte ordering of a 4-byte word.",
+		"module_declaration": "
+		module top_module( 
+			input [31:0] in,
+			output [31:0] out 
+		);",
+		"output": "
+		module top_module( 
+			input [31:0] in,
+			output [31:0] out 
+		);
+  
+			assign out[31:24] = in[7:0];
+			assign out[23:16] = in[15:8];
+			assign out[15:8]  = in[23:16];
+			assign out[7:0]   = in[31:24];
+
+		endmodule"
+	},{
+		"id": "bitwise_operators",
+		"instruction": "Build a circuit that has two 3-bit inputs that computes the bitwise-OR of the two vectors, the logical-OR of the two vectors, and the inverse (NOT) of both vectors. Place the inverse of b in the upper half of out_not (i.e., bits [5:3]), and the inverse of a in the lower half.",
+		"module_declaration": "
+		module top_module( 
+			input [2:0] a,
+			input [2:0] b,
+			output [2:0] out_or_bitwise,
+			output out_or_logical,
+			output [5:0] out_not
+		);",
+		"output": "
+		module top_module( 
+			input [2:0] a,
+			input [2:0] b,
+			output [2:0] out_or_bitwise,
+			output out_or_logical,
+			output [5:0] out_not
+		);
+  
+			assign out_or_bitwise = a | b;
+			assign out_or_logical = a || b;
+			assign out_not[5:3] = ~(b[2:0]);
+			assign out_not[2:0] = ~(a[2:0]);
+
+		endmodule"
+	},{
+		"id": "four_input_gates",
+		"instruction": "Build a combinational circuit with four inputs, in[3:0]. There are 3 outputs:
+	- out_and: output of a 4-input AND gate.
+    - out_or: output of a 4-input OR gate.
+    - out_xor: output of a 4-input XOR gate.",
+		"module_declaration": "
+		module top_module( 
+			input [3:0] in,
+			output out_and,
+			output out_or,
+			output out_xor
+		);",
+		"output": "
+		module top_module( 
+			input [3:0] in,
+			output out_and,
+			output out_or,
+			output out_xor
+		);
+
+			assign out_and = (in[3] & in[2] & in[1] & in[0]);
+			assign out_or  = (in[3] | in[2] | in[1] | in[0]);
+			assign out_xor = (in[3] ^ in[2] ^ in[1] ^ in[0]);
+
+		endmodule"
+	},{
+		"id": "vector_concatenation",
+		"instruction": "Given several input vectors, concatenate them together then split them up into several output vectors. There are six 5-bit input vectors: a, b, c, d, e, and f, for a total of 30 bits of input. There are four 8-bit output vectors: w, x, y, and z, for 32 bits of output. The output should be a concatenation of the input vectors followed by two 1 bits.",
+		"module_declaration": "
+		module top_module (
+			input [4:0] a, b, c, d, e, f,
+			output [7:0] w, x, y, z 
+		);",
+		"output": "
+		module top_module (
+			input [4:0] a, b, c, d, e, f,
+			output [7:0] w, x, y, z 
+		);
+
+			assign {w,x,y,z} = {a,b,c,d,e,f,2'b11};
+
+		endmodule"
+	},{
+		"id": "module_add",
+		"instruction": "You are given a module add16 that performs a 16-bit addition. Instantiate two of them to create a 32-bit adder. One add16 module computes the lower 16 bits of the addition result, while the second add16 module computes the upper 16 bits of the result, after receiving the carry-out from the first adder. Your 32-bit adder does not need to handle carry-in (assume 0) or carry-out (ignored), but the internal modules need to in order to function correctly. (In other words, the add16 module performs 16-bit a + b + cin, while your module performs 32-bit a + b). The provided module add16 has the following declaration: module add16 ( input[15:0] a, input[15:0] b, input cin, output[15:0] sum, output cout ); ",
+		"module_declaration": "
+		module top_module(
+			input [31:0] a,
+			input [31:0] b,
+			output [31:0] sum
+		);",
+		"output": "
+		module top_module(
+			input [31:0] a,
+			input [31:0] b,
+			output [31:0] sum
+		);
+			wire w,x;
+			add16 a1(a[15:0],b[15:0],1'b0,sum[15:0],w);
+			add16 a2(a[31:16],b[31:16],w,sum[31:16],x);
+		endmodule"
+	},{
+		"id": "5",
+		"instruction": "You are given a module add16 that performs a 16-bit addition. Instantiate two of them to create a 32-bit adder. One add16 module computes the lower 16 bits of the addition result, while the second add16 module computes the upper 16 bits of the result, after receiving the carry-out from the first adder. Your 32-bit adder does not need to handle carry-in (assume 0) or carry-out (ignored), but the internal modules need to in order to function correctly. (In other words, the add16 module performs 16-bit a + b + cin, while your module performs 32-bit a + b). The provided module add16 has the following declaration: module add16 ( input[15:0] a, input[15:0] b, input cin, output[15:0] sum, output cout ); ",
+		"module_declaration": "
+		module top_module(
+			input [31:0] a,
+			input [31:0] b,
+			output [31:0] sum
+		);",
+		"output": "
+		module top_module(
+			input [31:0] a,
+			input [31:0] b,
+			output [31:0] sum
+		);
+  
+			wire w1;
+			reg x = 0;
+  
+			add16 inst0(.a(a[15:0]), .b(b[15:0]),  .sum(sum[15:0]),  .cin(x), .cout(w1));
+			add16 inst1(.a(a[31:16]), .b(b[31:16]), .sum(sum[31:16]), .cin(w1));
+		endmodule"
+	},{
+		"id": "6",
+		"instruction": "A heating/cooling thermostat controls both a heater (during winter) and an air conditioner (during summer). Implement a circuit that will turn on and off the heater, air conditioning, and blower fan as appropriate. The thermostat can be in one of two modes: heating (mode = 1) and cooling (mode = 0). In heating mode, turn the heater on when it is too cold (too_cold = 1) but do not use the air conditioner. In cooling mode, turn the air conditioner on when it is too hot (too_hot = 1), but do not turn on the heater. When the heater or air conditioner are on, also turn on the fan to circulate the air. In addition, the user can also request the fan to turn on (fan_on = 1), even if the heater and air conditioner are off. Try to use only assign statements, to see whether you can translate a problem description into a collection of logic gates. ",
+		"module_declaration": "
+		module top_module (
+			input too_cold,
+			input too_hot,
+			input mode,
+			input fan_on,
+			output heater,
+			output aircon,
+			output fan
+		);",
+		"output": "
+		module top_module (
+			input too_cold,
+			input too_hot,
+			input mode,
+			input fan_on,
+			output heater,
+			output aircon,
+			output fan
+		);
+    
+			assign heater = mode & too_cold;
+			assign aircon = (~mode) & too_hot;
+			assign fan = fan_on | (heater | aircon);
+
+		endmodule"
+	},{
+		"id": "7",
+		"instruction": "A 'population count' circuit counts the number of '1's in an input vector. Build a population count circuit for a 3-bit input vector.",
+		"module_declaration": "
+		module top_module( 
+			input [2:0] in,
+			output [1:0] out 
+		);",
+		"output": "
+		module top_module( 
+			input [2:0] in,
+			output [1:0] out 
+		);
+  
+			integer i;
+    
+			always @(*) begin
+				out = 2'b0;
+				for(i = 0; i < 3; i ++) begin
+					if(in[i])
+						out = out + 2'b1;
+				end
+			end
+
+		endmodule"
+	},{
+		"id": "8",
+		"instruction": "Create a one-bit wide, 2-to-1 multiplexer. When sel=0, choose a. When sel=1, choose b.",
+		"module_declaration": "
+		module top_module( 
+			input a, b, sel,
+			output out 
+		);",
+		"output": "
+		module top_module( 
+			input a, b, sel,
+			output out 
+		);
+  
+			assign out = sel ? b : a;
+
+		endmodule"
+	},{
+		"id": "9",
+		"instruction": "Create a 16-bit wide, 9-to-1 multiplexer. sel=0 chooses a, sel=1 chooses b, etc. For the unused cases (sel=9 to 15), set all output bits to '1'.",
+		"module_declaration": "
+		module top_module( 
+			input [15:0] a, b, c, d, e, f, g, h, i,
+			input [3:0] sel,
+			output [15:0] out 
+		);",
+		"output": "
+		module top_module( 
+			input [15:0] a, b, c, d, e, f, g, h, i,
+			input [3:0] sel,
+			output [15:0] out 
+		);
+    
+			always@(*)begin
+				case(sel)
+					4'h0 : out = a;
+					4'h1 : out = b;
+					4'h2 : out = c;
+					4'h3 : out = d;
+					4'h4 : out = e;
+					4'h5 : out = f;
+					4'h6 : out = g;
+					4'h7 : out = h;
+					4'h8 : out = i;
+					default : out = 16'hFFFF;
+				endcase
+			end
+
+		endmodule"
+	},{
+		"id": "10",
+		"instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+		"module_declaration": "
+		module top_module( 
+			input [1023:0] in,
+			input [7:0] sel,
+			output [3:0] out 
+		);",
+		"output": "
+		module top_module( 
+			input [1023:0] in,
+			input [7:0] sel,
+			output [3:0] out 
+		);
+    
+			assign out = in[sel*4 +: 4];
+
+		endmodule"
+	},{
+		"id": "11",
+		"instruction": "Create a 4-bit wide, 256-to-1 multiplexer. The 256 4-bit inputs are all packed into a single 1024-bit input vector. sel=0 should select bits in[3:0], sel=1 selects bits in[7:4], sel=2 selects bits in[11:8], etc.",
+		"module_declaration": "
+		module top_module( 
+			input [1023:0] in,
+			input [7:0] sel,
+			output [3:0] out 
+		);",
+		"output": "
+		module top_module (
+			input [1023:0] in,
+			input [7:0] sel,
+			output [3:0] out
+		);
+
+			assign out = {in[sel*4+3], in[sel*4+2], in[sel*4+1], in[sel*4+0]};
+
+		endmodule"
+	},{
+		"id": "12",
+		"instruction": "Create a half adder. A half adder adds two bits (with no carry-in) and produces a sum and carry-out.",
+		"module_declaration": "
+		module top_module( 
+			input a, b,
+			output cout, sum 
+		);",
+		"output": "
+		module top_module( 
+			input a, b,
+			output cout, sum 
+		);
+  
+			assign sum = a ^ b;
+			assign cout = a & b;
+
+		endmodule"
+	},{
+		"id": "13",
+		"instruction": "Create a full adder. A full adder adds three bits (including carry-in) and produces a sum and carry-out.",
+		"module_declaration": "
+		module top_module( 
+			input a, b, cin,
+			output cout, sum 
+		);",
+		"output": "
+		module top_module( 
+			input a, b, cin,
+			output cout, sum 
+		);
+  
+			assign sum = a ^ b ^ cin;
+			assign cout = a & b | a & cin | b & cin;
+
+		endmodule"
+	},{
+		"id": "14",
+		"instruction": "Assume that you have two 8-bit 2's complement numbers, a[7:0] and b[7:0]. These numbers are added to produce s[7:0]. Also compute whether a (signed) overflow has occurred.",
+		"module_declaration": "
+		module top_module (
+			input [7:0] a,
+			input [7:0] b,
+			output [7:0] s,
+			output overflow
+		);",
+		"output": "
+		module top_module (
+			input [7:0] a,
+			input [7:0] b,
+			output [7:0] s,
+			output overflow
+		);
+     
+			assign s = a + b;
+			assign overflow = (~(a[7] ^ b[7])) & (s[7] != a[7]);
+
+		endmodule"
+	},{
+		"id": "15",
+		"instruction": "Now that you know how to build a full adder, make 3 instances of it to create a 3-bit binary ripple-carry adder. The adder adds two 3-bit numbers and a carry-in to produce a 3-bit sum and carry out. To encourage you to actually instantiate full adders, also output the carry-out from each full adder in the ripple-carry adder. cout[2] is the final carry-out from the last full adder, and is the carry-out you usually see.",
+		"module_declaration": "
+		module top_module( 
+			input [2:0] a, b,
+			input cin,
+			output [2:0] cout,
+			output [2:0] sum 
+		);",
+		"output": "
+		module top_module( 
+			input [2:0] a, b,
+			input cin,
+			output [2:0] cout,
+			output [2:0] sum 
+		);
+			wire [2:0] cout1;
+			fadd f1(a[0],b[0],cin,cout1[0],sum[0]);
+			fadd f2(a[1],b[1],cout1[0],cout1[1],sum[1]);
+			fadd f3(a[2],b[2],cout1[1],cout1[2],sum[2]);
+			assign cout = cout1;
+		endmodule
+	
+		module fadd( 
+			input a, b, cin,
+			output cout, sum 
+		);
+			assign sum = a^b^cin;
+			assign cout = (a&b)|(b&cin)|(a&cin);
+		endmodule"
+	},{
+		"id": "16",
+		"instruction": "A single-output digital system with four inputs (a,b,c,d) generates a logic-1 when 2, 7, or 15 appears on the inputs, and a logic-0 when 0, 1, 4, 5, 6, 9, 10, 13, or 14 appears. The input conditions for the numbers 3, 8, 11, and 12 never occur in this system. For example, 7 corresponds to a,b,c,d being set to 0,1,1,1, respectively.Determine the output out_sop in minimum SOP form, and the output out_pos in minimum POS form.",
+		"module_declaration": "
+		module top_module (
+			input a,
+			input b,
+			input c,
+			input d,
+			output out_sop,
+			output out_pos
+		);",
+		"output": "
+		module top_module (
+			input a,
+			input b,
+			input c,
+			input d,
+			output out_sop,
+			output out_pos
+		); 
+  
+			assign out_sop = (c & d) | (~a & ~b & c);
+			assign out_pos = (c) & (~a | b) & (d | ~b);
+
+		endmodule"
+	},{
+		"id": "17",
+		"instruction": "Create 8 D flip-flops with active high asynchronous reset. All DFFs should be triggered by the positive edge of clk.",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input areset,   // active high asynchronous reset
+			input [7:0] d,
+			output [7:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input areset,
+			input [7:0] d,
+			output [7:0] q
+		);
+		
+			always@(posedge clk,posedge areset)begin
+				if(areset)
+					q <= 0;
+				else
+					q <= d;
+			end
+
+		endmodule"
+	},{
+		"id": "18",
+		"instruction": "Build a 4-bit binary counter that counts from 0 through 15, inclusive, with a period of 16. The reset input is synchronous, and should reset the counter to 0.",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input reset,      // Synchronous active-high reset
+			output [3:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input reset,
+			output [3:0] q
+		);
+  
+			always@(posedge clk)begin
+				if(reset)
+					q <= 0;
+				else
+					q <= q + 1'b1;
+			end
+
+		endmodule"
+	},{
+		"id": "19",
+		"instruction": "Build a decade counter that counts from 0 through 9, inclusive, with a period of 10. The reset input is synchronous, and should reset the counter to 0.",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input reset,        // Synchronous active-high reset
+			output [3:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input reset,       
+			output [3:0] q
+		);
+  
+			always@(posedge clk) begin
+				if(reset | q==9)
+					q <= 0;
+				else
+					q <= q + 1'b1;
+			end
+
+		endmodule"
+	},{
+		"id": "20",
+		"instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+		"module_declaration": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		);",
+		"output": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		);
+    
+			reg [2:0] ena_hms;	//determine when will "ss","mm" and "hh" need to be increased
+			assign ena_hms = {(ena && (mm == 8'h59) && (ss == 8'h59)), (ena && (ss == 8'h59)), ena};   
+    
+			count60 count_ss(
+				.clk(clk),
+				.reset(reset),
+				.ena(ena_hms[0]),
+				.q(ss)
+			);
+			count60 count_mm(
+				.clk(clk),
+				.reset(reset),
+				.ena(ena_hms[1]),
+				.q(mm)
+			);
+			
+			always @(posedge clk) begin
+				if(reset) begin
+					hh <= 8'h12;    //hh=12
+					pm <= 0;
+				end
+				else begin
+					if(ena_hms[2] && (mm == 8'h59) && (ss == 8'h59)) begin    //if mm=59 and ss=59
+						if(hh == 8'h12)  hh <= 8'h1; //hh changes:12AM->1AM or 12PM->1PM  
+						else if(hh == 8'h11) begin  //if hh=11, PM->AM or AM->PM
+							hh[3:0] <= hh[3:0] + 1'h1; //hh=12
+							pm <= ~pm;
+						end 
+						else begin
+							if(hh[3:0] == 4'h9) begin
+								hh[3:0] <= 4'h0;
+								hh[7:4] <= hh[7:4] + 1'h1;
+							end
+							else hh[3:0] = hh[3:0] + 1'h1;
+						end
+					end
+					else hh <= hh;
+				end
+			end
+		
+		endmodule
+		
+		module count60(
+			input clk,
+			input reset,
+			input ena,
+			output [7:0] q
+		);
+			always @(posedge clk) begin
+				if(reset) q <= 8'h0;
+				else begin
+					if(ena) begin 
+						if(q[3:0] == 4'h9) begin
+							if(q[7:4] == 4'h5) q <= 8'h0;
+							else begin
+								q[7:4] <= q[7:4] + 1'h1;
+								q[3:0] <= 4'h0;
+							end 
+						end
+						else q[3:0] <= q[3:0] + 1'h1; 
+					end
+					else q <= q;
+				end
+			end
+		endmodule"
+	},{
+		"id": "21",
+		"instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+		"module_declaration": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		);",
+		"output": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		); 
+			always@(posedge clk)
+				begin
+					if(reset) begin hh[3:0]<=4'd2;hh[7:4]<=4'd1; mm<=8'h00; ss<=8'h00; pm<=1'b0; end
+					else if(ena)
+						begin
+							if(ss[3:0] != 4'd9) ss[3:0]<=ss[3:0]+4'd1;
+							else
+								begin
+									ss[3:0]<=4'd0;
+									ss[7:4]<=ss[7:4]+4'd1;
+									if(ss[7:4]== 4'd5) 
+										begin
+											ss[7:4]<=4'd0;
+											mm[3:0]<=mm[3:0]+4'd1;
+											if(mm[3:0] == 4'd9)
+												begin
+													mm[3:0]<=4'd0;
+													mm[7:4]<=mm[7:4]+4'd1;
+													if(mm[7:4] == 4'd5)
+														begin
+															mm[7:4]<=4'd0;
+															hh[3:0]<=hh[3:0]+4'd1;
+															if(hh[3:0] == 4'd9)
+																begin
+																	hh[3:0]<=4'd0;
+																	hh[7:4]<=hh[7:4]+4'd1;
+																end
+															if(hh[3:0] == 4'd1 && hh[7:4]==4'd1)
+																begin
+																	pm<=~pm;
+																	hh[3:0]<=4'd2;
+																	hh[7:4]<=4'd1;
+																end
+															if(hh[3:0] == 4'd2 && hh[7:4]==4'd1)
+																begin
+																	hh[3:0]<=4'd1;
+																	hh[7:4]<=4'd0;
+																end
+														end
+												end
+										end
+								end
+						end
+				end
+		endmodule"
+	},{
+		"id": "22",
+		"instruction": "Create a set of counters suitable for use as a 12-hour clock (with am/pm indicator). Your counters are clocked by a fast-running clk, with a pulse on ena whenever your clock should increment (i.e., once per second). reset resets the clock to 12:00 AM. pm is 0 for AM and 1 for PM. hh, mm, and ss are two BCD (Binary-Coded Decimal) digits each for hours (01-12), minutes (00-59), and seconds (00-59). Reset has higher priority than enable, and can occur even when not enabled.",
+		"module_declaration": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		);",
+		"output": "
+		module top_module(
+			input clk,
+			input reset,
+			input ena,
+			output pm,
+			output [7:0] hh,
+			output [7:0] mm,
+			output [7:0] ss
+		); 
+    
+			always@(posedge clk) begin
+				if (reset) begin
+					hh <= 8'h12;
+					mm <= 0;
+					ss <= 0;
+					pm <= 0;
+				end
+				else begin
+					if (ena) begin
+						pm <= (hh == 8'h11 && mm == 8'h59 && ss == 8'h59)? ~pm : pm;
+						if (ss == 8'h59) begin // ss = 59
+							ss <= 0;
+							
+							if (mm == 8'h59) begin // mm = 59
+								mm <= 0;
+								
+								if (hh == 8'h12) begin
+									hh <= 8'h01;
+								end
+								
+								else begin
+									if (hh[3:0] == 4'd9) begin
+										hh[3:0] <= 0;
+										hh[7:4] <= hh[7:4] + 4'd1;
+									end
+									else 
+										hh[3:0] <= hh[3:0] + 4'd1;  
+								end
+				
+							end
+							else begin
+								if (mm[3:0] == 4'd9) begin
+									mm[3:0] <= 0;
+									mm[7:4] <= mm[7:4] + 4'd1;
+								end
+								else 
+									mm[3:0] <= mm[3:0] + 4'd1; 
+							end
+							
+							
+						end
+						else begin
+							if (ss[3:0] == 4'd9) begin
+								ss[3:0] <= 0;
+								ss[7:4] <= ss[7:4] + 4'd1;
+							end
+							else 
+								ss[3:0] <= ss[3:0] + 4'd1;
+						end
+					end   
+				end
+			end
+		
+		endmodule"
+	},{
+		"id": "23",
+		"instruction": "In this question, you will design a circuit for an 8x1 memory, where writing to the memory is accomplished by shifting-in bits, and reading is "random access", as in a typical RAM. You will then use the circuit to realize a 3-input logic function. First, create an 8-bit shift register with 8 D-type flip-flops. Label the flip-flop outputs from Q[0]...Q[7]. The shift register input should be called S, which feeds the input of Q[0] (MSB is shifted in first). The enable input controls whether to shift. Then, extend the circuit to have 3 additional inputs A,B,C and an output Z. The circuit's behaviour should be as follows: when ABC is 000, Z=Q[0], when ABC is 001, Z=Q[1], and so on. Your circuit should contain ONLY the 8-bit shift register, and multiplexers.",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input enable,
+			input S,
+			input A, B, C,
+			output Z 
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input enable,
+			input S,
+			input A, B, C,
+			output Z
+		); 
+
+			reg[7:0] q;
+
+			always @(posedge clk) begin
+				if(enable)
+					q <= {q[6:0], S};	
+				else 
+			q <= q;
+			end
+		
+			always @(*) begin
+			case({A, B, C})
+				3'b000 : Z = q[0];
+				3'b001 : Z = q[1];
+				3'b010 : Z = q[2];
+				3'b011 : Z = q[3];
+				3'b100 : Z = q[4];
+				3'b101 : Z = q[5];
+				3'b110 : Z = q[6];
+				3'b111 : Z = q[7];
+			endcase
+			end
+		
+		endmodule"
+	},{
+		"id": "24",
+		"instruction": "Conway's Game of Life is a two-dimensional cellular automaton. The "game" is played on a two-dimensional grid of cells, where each cell is either 1 (alive) or 0 (dead). At each time step, each cell changes state depending on how many neighbours it has:
+		
+		- 0-1 neighbour: Cell becomes 0.
+		- 2 neighbours: Cell state does not change.
+		- 3 neighbours: Cell becomes 1.
+		- 4+ neighbours: Cell becomes 0.
+		
+		The game is formulated for an infinite grid. In this circuit, we will use a 16x16 grid. To make things more interesting, we will use a 16x16 toroid, where the sides wrap around to the other side of the grid. For example, the corner cell (0,0) has 8 neighbours: (15,1), (15,0), (15,15), (0,1), (0,15), (1,1), (1,0), and (1,15). The 16x16 grid is represented by a length 256 vector, where each row of 16 cells is represented by a sub-vector: q[15:0] is row 0, q[31:16] is row 1, etc. (This tool accepts SystemVerilog, so you may use 2D vectors if you wish.)
+		
+		- load: Loads data into q at the next clock edge, for loading initial state.
+		- q: The 16x16 current state of the game, updated every clock cycle.
+
+		The game state should advance by one timestep every clock cycle. ",
+		"module_declaration": "
+		module top_module(
+			input clk,
+			input load,
+			input [255:0] data,
+			output [255:0] q 
+		);",
+		"output": "
+		module rule (
+			input [7:0] neigh,
+			input current,
+			output next 
+		);
+		
+			wire [2:0] pop;
+			assign pop = {2'b00, neigh[0]} +
+						{2'b00, neigh[1]} +
+						{2'b00, neigh[2]} +
+						{2'b00, neigh[3]} +
+						{2'b00, neigh[4]} +
+						{2'b00, neigh[5]} +
+						{2'b00, neigh[6]} +
+						{2'b00, neigh[7]}; 
+			
+			reg tmp;
+			assign next = tmp;
+		
+			always @(*) begin
+				case (pop)
+					2: tmp = current;
+					3: tmp = 1;
+					default: tmp = 0;
+				endcase
+			end
+		endmodule
+		
+		module top_module(
+			input clk,
+			input load,
+			input [255:0] data,
+			output [255:0] q ); 
+			
+			wire [255:0] next;
+			
+			genvar x, y;
+			generate
+				for (x=0; x<=15; x=x+1) begin : gen_x
+					for (y=0; y<=15; y=y+1) begin : gen_y
+						rule fate (
+							.neigh({q[(x==0 ? 15 : x-1) + (y==0 ? 15 : y-1)*16],
+									q[(x==0 ? 15 : x-1) + y                *16],
+									q[(x==0 ? 15 : x-1) + (y==15 ? 0 : y+1)*16],
+									q[x                 + (y==0 ? 15 : y-1)*16],
+									q[x                 + (y==15 ? 0 : y+1)*16],
+									q[(x==15 ? 0 : x+1) + (y==0 ? 15 : y-1)*16],
+									q[(x==15 ? 0 : x+1) + y                *16],
+									q[(x==15 ? 0 : x+1) + (y==15 ? 0 : y+1)*16]}),
+							.current(q[(x + y*16)]),
+							.next(next[(x + y*16)])
+						);
+					end
+				end
+			endgenerate
+			
+			always @(posedge clk) begin
+				if (load) begin
+					q <= data;
+				end else begin
+					q <= next;
+				end
+			end
+		endmodule"
+	},{
+		"id": "25",
+		"instruction": "Conway's Game of Life is a two-dimensional cellular automaton. The "game" is played on a two-dimensional grid of cells, where each cell is either 1 (alive) or 0 (dead). At each time step, each cell changes state depending on how many neighbours it has:
+		
+		- 0-1 neighbour: Cell becomes 0.
+		- 2 neighbours: Cell state does not change.
+		- 3 neighbours: Cell becomes 1.
+		- 4+ neighbours: Cell becomes 0.
+		
+		The game is formulated for an infinite grid. In this circuit, we will use a 16x16 grid. To make things more interesting, we will use a 16x16 toroid, where the sides wrap around to the other side of the grid. For example, the corner cell (0,0) has 8 neighbours: (15,1), (15,0), (15,15), (0,1), (0,15), (1,1), (1,0), and (1,15). The 16x16 grid is represented by a length 256 vector, where each row of 16 cells is represented by a sub-vector: q[15:0] is row 0, q[31:16] is row 1, etc. (This tool accepts SystemVerilog, so you may use 2D vectors if you wish.)
+		
+		- load: Loads data into q at the next clock edge, for loading initial state.
+		- q: The 16x16 current state of the game, updated every clock cycle.
+
+		The game state should advance by one timestep every clock cycle. ",
+		"module_declaration": "
+		module top_module(
+			input clk,
+			input load,
+			input [255:0] data,
+			output [255:0] q 
+		);",
+		"output": "
+		module top_module(
+			input clk,
+			input load,
+			input [255:0] data,
+			output [255:0] q 
+		); 
+			
+			reg [255:0] temp;
+			wire [287:0] map = {temp[15:0],temp,temp[255:240]};
+			int count;
+			
+			always@(posedge clk) begin
+				if(load) begin
+					q <= data;
+				end
+				else begin
+					for (int i = 16; i < 272; i = i+1) begin
+						if(i == 16 || i == 32 || i == 48 || i == 64 || i == 80 || i == 96 || i==112 || i==128 || i == 144
+						|| i == 160 || i == 176 || i == 192 || i == 208 || i == 224 || i == 240 || i == 256) begin
+							count = map[i+1]+map[i+15]+map[i+16]+map[i+17]+map[i+31]+map[i-1]+map[i-15]+map[i-16];
+						end
+						else if (i == 31 || i == 47 || i == 63 || i == 79 || i == 95 || i==111 || i==127 || i == 143
+						|| i == 159 || i == 175 || i == 191 || i == 207 || i == 223 || i == 239 || i == 255 || i == 271) begin
+							count = map[i-1]+map[i-15]+map[i-16]+map[i-17]+map[i-31]+map[i+1]+map[i+15]+map[i+16];
+						end
+						else begin
+							count = map[i+1]+map[i+15]+map[i+16]+map[i+17]+map[i-1]+map[i-15]+map[i-16]+map[i-17];
+						end
+						
+						if(count == 2)
+							q[i-16] <= q[i-16];
+						else if(count == 3)
+							q[i-16] <= 1'b1;
+						else
+							q[i-16] <= 1'b0;
+					end
+				end
+				
+			end
+			
+			always@(negedge clk) begin
+				temp <= q;
+			end
+		endmodule"
+	},{
+		"id": "26",
+		"instruction": "The following is the state transition table for a Moore state machine with one input, one output, and four states. Use the following state encoding: A=2'b00, B=2'b01, C=2'b10, D=2'b11. Implement only the state transition logic and output logic (the combinational logic portion) for this state machine. Given the current state (state), compute the next_state and output (out) based on the state transition table.
+
+		- State: A, Next state if in = 0: A, Next state if in = 1: B, Output: 0
+		- State: B, Next state if in = 0: C, Next state if in = 1: B, Output: 0
+		- State: C, Next state if in = 0: A, Next state if in = 1: D, Output: 0
+		- State: D, Next state if in = 0: C, Next state if in = 1: B, Output: 1",
+		"module_declaration": "
+		module top_module(
+			input in,
+			input [1:0] state,
+			output [1:0] next_state,
+			output out
+		);",
+		"output": "
+		module top_module(
+			input in,
+			input [1:0] state,
+			output [1:0] next_state,
+			output out
+			); 
+
+			parameter A=2'd0, B=2'd1, C=2'd2, D=2'd3;
+			
+			always@(*)
+				begin
+					case(state)
+						A: next_state <=in?B:A;
+						B: next_state <=in?B:C;
+						C: next_state <=in?D:A;
+						D: next_state <=in?B:C;
+					endcase
+				end
+				
+			assign out = (state == D);
+		endmodule"
+	},{
+		"id": "27",
+		"instruction": "Given the state-assigned table shown below, implement the finite-state machine. Reset should reset the FSM to state 000.
+		- State: 000, Next state if input x=0: 000, Next state if input x=1: 001, Output z: 0
+		- State: 001, Next state if input x=0: 001, Next state if input x=1: 100, Output z: 0
+		- State: 010, Next state if input x=0: 010, Next state if input x=1: 001, Output z: 0
+		- State: 011, Next state if input x=0: 001, Next state if input x=1: 010, Output z: 1
+		- State: 100, Next state if input x=0: 011, Next state if input x=1: 100, Output z: 1",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input reset,   // Synchronous reset
+			input x,
+			output z
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input reset,   // Synchronous reset
+			input x,
+			output z
+		);
+		
+			parameter a = 0, b = 1, c = 2, d = 3, e = 4;
+			reg [2:0] state, next_state;
+		
+			always @(*) begin
+				case (state)
+					a: next_state = x ? b : a;
+					b: next_state = x ? e : b;
+					c: next_state = x ? b : c;
+					d: next_state = x ? c : b;
+					e: next_state = x ? e : d;
+				endcase
+			end
+		
+			always @(posedge clk) begin
+				if (reset) begin
+					state <= a;
+				end
+				else begin
+					state <= next_state;
+				end
+			end
+		
+			assign z = (state == d || state == e);
+		
+		endmodule"
+	},{
+		"id": "28",
+		"instruction": "Consider a finite state machine that is used to control some type of motor. The FSM has inputs x and y, which come from the motor, and produces outputs f and g, which control the motor. There is also a clock input called clk and a reset input called resetn. The FSM has to work as follows. As long as the reset input is asserted, the FSM stays in a beginning state, called state A. When the reset signal is de-asserted, then after the next clock edge the FSM has to set the output f to 1 for one clock cycle. Then, the FSM has to monitor the x input. When x has produced the values 1, 0, 1 in three successive clock cycles, then g should be set to 1 on the following clock cycle. While maintaining g = 1 the FSM has to monitor the y input. If y has the value 1 within at most two clock cycles, then the FSM should maintain g = 1 permanently (that is, until reset). But if y does not become 1 within two clock cycles, then the FSM should set g = 0 permanently (until reset). ",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input resetn,    // active-low synchronous reset
+			input x,
+			input y,
+			output f,
+			output g
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input resetn,    // active-low synchronous reset
+			input x,
+			input y,
+			output reg f,
+			output reg g
+		); 
+		
+			parameter A=4'd0, f1=4'd1, tmp0=4'd2, tmp1=4'd3, tmp2=4'd4, g1=4'd5, g1p=4'd6, tmp3=4'd7, g0p=4'd8;
+			reg [3:0] state, next_state;
+			
+			always@(*) begin
+				case(state)
+					A: begin
+						if(resetn) 
+							next_state = f1;
+						else
+							next_state = A;
+					end
+					f1:     next_state = tmp0;
+					tmp0: begin
+						if(x)
+							next_state = tmp1;
+						else
+							next_state = tmp0;
+					end
+					tmp1: begin
+						if(~x)
+							next_state = tmp2;
+						else
+							next_state = tmp1;
+					end
+					tmp2: begin
+						if(x)
+							next_state = g1;
+						else
+							next_state = tmp0;
+					end
+					g1: begin
+						if(y)
+							next_state = g1p;
+						else
+							next_state = tmp3;
+					end
+					tmp3: begin
+						if(y)
+							next_state = g1p;
+						else
+							next_state = g0p;
+					end
+					g1p: begin
+						if(~resetn)
+							next_state = A;
+						else
+							next_state = g1p;
+					end
+					g0p: begin
+						if(~resetn)
+							next_state = A;
+						else
+							next_state = g0p;
+					end
+				endcase
+			end
+			
+			always@(posedge clk) begin
+				if(~resetn)
+					state <= A;
+				else
+					state <= next_state;
+			end
+			
+			always@(posedge clk) begin
+				case(next_state)
+					f1:     f <= 1'b1;
+					g1:		g <= 1'b1;
+					tmp3:	g <= 1'b1;
+					g1p:    g <= 1'b1;
+					g0p:    g <= 1'b0;
+					default: begin
+							f <= 1'b0;
+							g <= 1'b0;
+					end
+				endcase
+			end
+		
+		endmodule"
+	},{
+		"id": "29",
+		"instruction": "Build a counter that counts from 0 to 999, inclusive, with a period of 1000 cycles. The reset input is synchronous, and should reset the counter to 0.",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input reset,
+			output [9:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input reset,
+			output [9:0] q
+		);
+    
+			always @(posedge clk) begin
+				if (reset) q <= 0;
+				else begin
+				if (q < 999) q <= q + 1'b1;
+					else q <= 0;
+				end
+			end
+	
+		endmodule"
+	},{
+		"id": "30",
+		"instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input shift_ena,
+			input count_ena,
+			input data,
+			output [3:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input shift_ena,
+			input count_ena,
+			input data,
+			output [3:0] q
+		);
+		
+			reg [3:0] shift_temp;
+		
+			always @(posedge clk) begin
+				if (shift_ena) begin
+					shift_temp <= {shift_temp[2:0], data};
+				end
+				else if (count_ena) begin
+					shift_temp <= shift_temp - 1'b1;
+				end 
+			end
+		
+			assign q = shift_temp;
+			
+		endmodule"
+	},{
+		"id": "31",
+		"instruction": "Build a four-bit shift register that also acts as a down counter. Data is shifted in most-significant-bit first when shift_ena is 1. The number currently in the shift register is decremented when count_ena is 1. Since the full system doesn't ever use shift_ena and count_ena together, it does not matter what your circuit does if both control inputs are 1 (This mainly means that it doesn't matter which case gets higher priority).",
+		"module_declaration": "
+		module top_module (
+			input clk,
+			input shift_ena,
+			input count_ena,
+			input data,
+			output [3:0] q
+		);",
+		"output": "
+		module top_module (
+			input clk,
+			input shift_ena,
+			input count_ena,
+			input data,
+			output [3:0] q
+		);
+			
+			always@(posedge clk)begin
+				if(shift_ena)begin
+					q <= {q[2:0], data};
+				end
+				else if(count_ena)begin
+					q <= q - 1'b1;
+				end
+			end
+		
+		endmodule"
+	},{
+		"id": "32",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "33",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "34",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "35",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "36",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "37",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "38",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "39",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "40",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "41",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "42",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "43",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "44",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "45",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "46",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "47",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "48",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "49",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "50",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "51",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "52",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "53",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "54",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "55",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "56",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "57",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},{
+		"id": "58",
+		"instruction": "",
+		"module_declaration": "",
+		"output": ""
+	},
+
+
+
+
+
+]
