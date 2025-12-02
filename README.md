@@ -22,25 +22,25 @@ This repo evaluates a small language model (TinyLlama-1.1B) on Verilog code gene
 
 ## Repo Layout
 
-data/
-  tasks.jsonl                    # eval tasks (id + prompt + module_declaration)
-  training_dataset.*             # small HDL training set
+-data/
+  -tasks.jsonl                    # eval tasks (id + prompt + module_declaration)
+  -training_dataset.*             # small HDL training set
 
-outputs/
-  v_base/                        # baseline model .v outputs (per task)
-  v_lora/                        # LoRA model .v outputs (per task)
-  tb_dump_base/, tb_dump_lora/   # generated testbenches
+-outputs/
+  -v_base/                        # baseline model .v outputs (per task)
+  -v_lora/                        # LoRA model .v outputs (per task)
+  -tb_dump_base/, tb_dump_lora/   # generated testbenches
 
-results/
-  base_*.csv / lora_*.csv        # CSVs from each phase
-  *_summary.txt                  # one-line summaries
+-results/
+  -base_*.csv / lora_*.csv        # CSVs from each phase
+  -*_summary.txt                  # one-line summaries
 
-src/
-  base_eval_many.py              # run baseline gen + checks over all tasks
-  llm_eval_many_new.py           # run LoRA gen + checks over all tasks
-  generate_with_lora_new.py      # simple generate_verilog() helper
-  finetune_from_hdljson_new.py   # LoRA fine-tuning script
-  auto_tb_single.py              # build + run minimal testbenches on a folder of .v files
+-src/
+  -base_eval_many.py              # run baseline gen + checks over all tasks
+  -llm_eval_many_new.py           # run LoRA gen + checks over all tasks
+  -generate_with_lora_new.py      # simple generate_verilog() helper
+  -finetune_from_hdljson_new.py   # LoRA fine-tuning script
+  -auto_tb_single.py              # build + run minimal testbenches on a folder of .v files
 
 ## Setup
 
@@ -61,9 +61,7 @@ export TOKENIZERS_PARALLELISM=false
 
 Generate and evaluate TinyLlama-1.1B on all tasks.
 Generate & run checks, write Verilog into outputs/v_base and a CSV into results/:
-python src/base_eval_many.py \
-  --tasks data/tasks.jsonl \
-  --out results/base_baseline.csv
+python src/base_eval_many.py --tasks data/tasks.jsonl --out results/base_baseline.csv
 
 What it does:
 - Prompts the base model for each task in data/tasks.jsonl.
@@ -74,20 +72,13 @@ What it does:
 
 Fine-tune with LoRA:
 
-python src/finetune_from_hdljson_new.py \
-  --train data/training_dataset.json \
-  --base tinyllama/TinyLlama-1.1B-Chat-v1.0 \
-  --out_dir runs/lora_tinyllama \
-  --lr 2e-4 --epochs 3 --batch_size 8
+python src/finetune_from_hdljson_new.py --train data/training_dataset.json --base tinyllama/TinyLlama-1.1B-Chat-v1.0 --out_dir runs/lora_tinyllama --lr 2e-4 --epochs 3 --batch_size 8
 
 This produces LoRA weights in runs/lora_tinyllama/.
 
 Generate and evaluate with the trained adapter:
 
-python src/llm_eval_many_new.py \
-  --tasks data/tasks.jsonl \
-  --out results/lora_eval.csv \
-  --lora_dir runs/lora_tinyllama
+python src/llm_eval_many_new.py --tasks data/tasks.jsonl --out results/lora_eval.csv --lora_dir runs/lora_tinyllama
 
 Outputs:
 - Verilog files in outputs/v_lora/
@@ -104,20 +95,10 @@ We do a dumb but useful simulation test using Icarus Verilog (iverilog + vvp). F
 Run it once for each the baseline model and the trained model verilog outputs:
 
 Baseline:
-python src/auto_tb_single.py \
-  --tasks data/tasks.jsonl \
-  --dir outputs/v_base \
-  --iters 200 \
-  --dump_dir outputs/tb_dump_base \
-  --out results/base_tb.csv
+python src/auto_tb_single.py --tasks data/tasks.jsonl --dir outputs/v_base --iters 200 --dump_dir outputs/tb_dump_base --out results/base_tb.csv
 
 Trained:
-python src/auto_tb_single.py \
-  --tasks data/tasks.jsonl \
-  --dir outputs/v_lora \
-  --iters 200 \
-  --dump_dir outputs/tb_dump_lora \
-  --out results/lora_tb.csv
+python src/auto_tb_single.py --tasks data/tasks.jsonl --dir outputs/v_lora --iters 200 --dump_dir outputs/tb_dump_lora --out results/lora_tb.csv
 
 Each run prints a one-line summary and writes *_tb_summary.txt.
 
