@@ -61,6 +61,7 @@ export TOKENIZERS_PARALLELISM=false
 
 Generate and evaluate TinyLlama-1.1B on all tasks.
 Generate & run checks, write Verilog into outputs/v_base and a CSV into results/:
+
 python src/base_eval_many.py --tasks data/tasks.jsonl --out results/base_baseline.csv
 
 What it does:
