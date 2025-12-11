@@ -1,6 +1,5 @@
-#!/usr/bin/env python3
-# batch mode: feed it a tasks file, watch the fireworks
-# prints one line per task like a scoreboard, then a tiny summary, then a cs
+# batch mode: feed it a tasks file
+# prints one line per task like a scoreboard, then a tiny summary, then a csv
 
 import os, re, json, argparse, subprocess
 from pathlib import Path
@@ -9,10 +8,10 @@ from datetime import datetime
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-# less chatter from tokenizer
+# less annoying from tokenizer
 os.environ["TOKENIZERS_PARALLELISM"] = "false"
 
-# env knobs (underscores are fine in env names; i don't make the rules)
+# env knobs
 quietMode = os.environ.get("HDLGEN_QUIET", "0") == "1"
 keepLogs = os.environ.get("HDLGEN_KEEP_LOGS", "0") == "1"
 modelName = os.environ.get("HDLGEN_MODEL", "TinyLlama/TinyLlama-1.1B-Chat-v1.0")
@@ -33,7 +32,7 @@ def getDevice():
 
 device = getDevice()
 
-# huggyface singletons
+# hugg
 tok = None
 mdl = None
 
@@ -52,16 +51,16 @@ def chatText(messages):
     return tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
 
 def normalize(text):
-    # banish code fences + invisible unicode crumbs that break diffs
+    # get rid of code fences + invisible unicode that break diffs pls
     text = re.sub(r"```[\w-]*", "", text).replace("```","")
     text = re.sub(r"'''[\w-]*", "", text).replace("'''","")
-    text = re.sub(r"<\|[^>]+?\|>", "", text) # model's cosplay tags
+    text = re.sub(r"<\|[^>]+?\|>", "", text) # models tags
     for ch in ("\ufeff", "\u200b", "\u200c", "\u200d", "\xa0"):
         text = text.replace(ch, " ")
     return text.strip()
 
 def fixSimple(code):
-    # micro-fixes so the toolchain gets to complain about real sins, not typos
+    # little fixes for typos so we can focus on testing functionality
     def flip(m):
         l = int(m.group(1)); r = int(m.group(2))
         return f"[{r}:{l}]" if l < r else m.group(0)
@@ -77,10 +76,9 @@ def fixSimple(code):
             code,
         )
 
-    # if the model gets chatty, i don’t wanna read it
+    # i don't like when it says a lot
     code = re.sub(r"//.*", "", code)
 
-    # “two-bit temp then AND them” trope -> no thanks
     code = re.sub(
         r"(?ms)^\s*wire\s*\[\s*1\s*:\s*0\s*\]\s*(\w+)\s*;\s*"
         r"assign\s+\1\[\s*0\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
@@ -100,16 +98,18 @@ def fixSimple(code):
     return code
 
 def extractModule(raw, top):
-    # yank a single module block out of whatever the model just did
+    # yeet a single module block out of whatever the model just did
     txt = normalize(raw)
 
     header = re.search(r"(?ims)^\s*module\s+[A-Za-z_]\w*\s*\(", txt)
     if header:
         tail = txt[header.start():]
         endm = re.search(r"(?is)\bendmodule\b", tail)
-        if not endm:
-            return None  # unfinished thought, story of my life
-        code = tail[:endm.end()]
+        if endm:
+            code = tail[:endm.end()]
+        else:
+        # salvage partial module instead of bailing because its just like awkward messy sometimes lowkey
+            code = tail
     else:
         m = re.search(r"(?is)\bmodule\b.*?\bendmodule\b", txt)
         if not m:
@@ -127,18 +127,24 @@ def extractModule(raw, top):
     code = re.sub(r"(?is)(^\s*module\s+\w+\s*\([^)]*\))\s*(?!;)", r"\1;", code)
 
     endIdx = code.lower().rfind("endmodule")
-    code = code[:endIdx] + "endmodule"
+    if endIdx != -1:
+        code = code[:endIdx] + "endmodule"
+    else:
+        # if model never closed the module add
+        code = code.rstrip() + "\nendmodule\n"
 
     code = fixSimple(code)
-
-    if not re.search(r"(?m)^\s*module\s+\w+\s*\(", code):
+    
+    # be strict but less so just require some module header even if it has no port list
+    if not re.search(r"(?m)^\s*module\s+\w+", code):
         return None
+
     if not code.endswith("\n"):
         code += "\n"
     return code
 
 def generateVerilog(top, text, maxNew):
-    # shoot a very stern prompt at the model and hope for the best
+    # very specific prompt at the model prompt engineering
     loadModel()
     sysMsg = (
         f"You are a Verilog-2001 code generator. "
@@ -156,13 +162,13 @@ def generateVerilog(top, text, maxNew):
         out = mdl.generate(
             **enc,
             max_new_tokens=maxNew,
-            do_sample=False,  # no dice rolling; we want consistent bad, then consistent better
+            do_sample=False, # consistent bad then consistent 
             eos_token_id=tok.eos_token_id,
         )
     return tok.decode(out[0], skip_special_tokens=True)
 
 def runTool(cmd, toolName, stem):
-    # run tool, maybe log, maybe complain
+    # run tool, maybe log
     p = subprocess.run(cmd, capture_output=True, text=True)
     if keepLogs:
         (logsDir / f"{stem}.{toolName}.log").write_text((p.stdout or "") + (p.stderr or ""))
@@ -170,12 +176,13 @@ def runTool(cmd, toolName, stem):
         print(p.stdout or p.stderr)
     return p
 
+# if model truly gives us something completely invalid and incorrect we need to sub an empty so things still work in eval
 def fallbackStub(top):
-    # bare minimum so the toolchain can boo us off stage
+    # bare minimum so the toolchain can not like freak out and can still eval through everything
     return f"module {top}();\nendmodule\n"
 
 def loadTasks(pathStr):
-    # supports either a JSON array OR JSONL (because we live in a society)
+    # json array or jsonl
     p = Path(pathStr)
     txt = p.read_text().strip()
     try:
@@ -213,6 +220,8 @@ def main():
         code = extractModule(raw, top)
         source = "model"
         if code is None:
+            # dump raw so you can inspect what went wrong
+            (logsDir / f"{tid}.raw.fallback.txt").write_text(raw)
             code = fallbackStub(top)
             source = "fallback"
 
@@ -221,15 +230,15 @@ def main():
 
         lint = runTool(["verible-verilog-lint", str(vPath)], "verible", tid)
         veri = runTool(["verilator", "--lint-only", str(vPath)], "verilator", tid)
-        yos  = runTool(["yosys","-Q","-p",
+        yos = runTool(["yosys","-Q","-p",
                         f"read_verilog {vPath}; hierarchy -check -top {top}; synth -top {top}; stat"], "yosys", tid)
 
         vOk = int(lint.returncode == 0)
         vlOk = int(veri.returncode == 0)
         yOk = int(yos.returncode == 0)
 
-        # scoreboard line: short, sweet, a little judgey
-        print(f"{tid}: verible {'PASS' if vOk else 'FAIL'}  verilator {'PASS' if vlOk else 'FAIL'}  yosys {'PASS' if yOk else 'FAIL'}")
+        # scoreboard line to show performance results with the EDAs
+        print(f"{tid}: verible {'PASS' if vOk else 'FAIL'} verilator {'PASS' if vlOk else 'FAIL'} yosys {'PASS' if yOk else 'FAIL'}")
 
         warnCount = 0
         if keepLogs:
@@ -257,9 +266,9 @@ def main():
 
     n = len(rows) or 1
     print(f"\nWrote {outPath}")
-    print(f"verible pass  {sum(r['veribleOk'] for r in rows)}/{n}")
-    print(f"verilator ok  {sum(r['verilatorOk'] for r in rows)}/{n}")
-    print(f"yosys ok         {sum(r['yosysOk'] for r in rows)}/{n}")
+    print(f"verible pass {sum(r['veribleOk'] for r in rows)}/{n}")
+    print(f"verilator ok {sum(r['verilatorOk'] for r in rows)}/{n}")
+    print(f"yosys ok {sum(r['yosysOk'] for r in rows)}/{n}")
 
 if __name__ == "__main__":
     main()

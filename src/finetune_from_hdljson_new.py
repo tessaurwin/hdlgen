@@ -10,23 +10,23 @@ DATA_FILE = ROOT / "data" / "training_dataset.json"
 OUT_DIR = ROOT / "checkpoints" / "tinyllama_lora_hdl"
 
 BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-MAX_LEN = 512
-BATCH_SIZE = 1
+MAX_LEN = 384
+BATCH_SIZE = 2
 GRAD_ACCUM = 4
-NUM_EPOCHS = 1     # try 2 later if time allows
-LR = 2e-4
+NUM_EPOCHS = 3     # try diff vals later if time allows
+LR = 1e-4
 
 
 def _read_dataset_any(path: Path):
     txt = path.read_text(encoding="utf-8").strip()
-    # try JSON array
+    # try json array
     try:
         data = json.loads(txt)
         if isinstance(data, list):
             return data
     except Exception:
         pass
-    # fallback JSONL
+    # fallback jsonl
     rows = []
     for ln in txt.splitlines():
         ln = ln.strip()
@@ -39,15 +39,15 @@ def _resolve_output_path(base_file: Path, rel: str) -> Path:
     p = Path(rel)
     if p.is_absolute():
         return p
-    # prefer alongside DATA_FILE parent (i.e., data/…)
+    # prefer alongside DATA_FILE parent (like data/…)
     cand = base_file.parent / rel
     if cand.exists():
         return cand
-    # try repo-root
+    # try repo root
     cand = ROOT / rel
     if cand.exists():
         return cand
-    # final: data/rel
+    # final data/rel
     return ROOT / "data" / rel
 
 def load_training_rows(path: Path):
@@ -110,6 +110,7 @@ def main():
     )
     model = get_peft_model(base_model, lora_cfg)
 
+    # initially use default params, but can change global vars at top for different iterations
     args = TrainingArguments(
         output_dir=str(OUT_DIR / "runs"),
         per_device_train_batch_size=BATCH_SIZE,

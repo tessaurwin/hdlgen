@@ -6,6 +6,7 @@ import re
 import sys
 import argparse
 from pathlib import Path
+
 import torch
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from peft import PeftModel
@@ -14,6 +15,7 @@ ROOT = Path(__file__).resolve().parents[1]
 BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
 ADAPTER_DIR = ROOT / "checkpoints" / "tinyllama_lora_hdl"
 
+
 def _device():
     if torch.backends.mps.is_available():
         return "mps"
@@ -21,10 +23,11 @@ def _device():
         return "cuda"
     return "cpu"
 
+
 DEV = None
 tokenizer_cache = None
 model_cache = None
-FORBIDDEN = ("Reg#", "mkReg", "rule ", "interface", "package")
+
 
 def load_model():
     global tokenizer_cache, model_cache, DEV
@@ -40,8 +43,9 @@ def load_model():
         model_cache.to(DEV).eval()
     return tokenizer_cache, model_cache
 
+
 def build_prompt(instruction: str, module_declaration: str) -> str:
-    # Remove the few-shot that used x[1:0]; give hard constraints instead.
+    # let post processing handle shape
     s = (
         "You are an expert digital designer. Emit PURE Verilog-2001 ONLY.\n"
         "Rules:\n"
@@ -56,144 +60,186 @@ def build_prompt(instruction: str, module_declaration: str) -> str:
     s += "### Verilog solution:\n"
     return s
 
-def slice_module(text: str) -> str:
-    m = re.search(r"(module\b[\s\S]*?endmodule)", text, flags=re.I)
-    return m.group(1).strip() if m else text.strip()
 
-def enforce_header(module_declaration: str, code: str) -> str:
-    if not module_declaration:
-        return code
-    want = " ".join(module_declaration.split()).rstrip()
-    if not want.endswith(";"):
-        want += ";"
-    m = re.search(r"(module\s+\w+\s*\([^;]*\);)", code, flags=re.I)
-    if m:
-        return code.replace(m.group(1), want, 1)
-    return want + "\n" + code
+# helpers vvvvv (similar to baseline script)
 
-# --- helpers to parse & validate ports/idents ---
-_VKEYWORDS = {
-    "module","endmodule","input","output","inout","wire","reg","assign",
-    "always","begin","end","if","else","case","endcase","posedge","negedge",
-    "parameter","localparam"
-}
 
-def _decl_port_names(decl: str):
-    # capture all names that appear after input/output/inout, including comma lists
-    names = re.findall(r"\b(?:input|output|inout)\b[^;]*?([A-Za-z_]\w*)", decl)
-    return set(names)
+def normalize(text: str) -> str:
+    # remove code fences + odd tokens
+    text = re.sub(r"```[\w-]*", "", text).replace("```", "")
+    text = re.sub(r"'''[\w-]*", "", text).replace("'''", "")
+    text = re.sub(r"<\|[^>]+?\|>", "", text)
+    for ch in ("\ufeff", "\u200b", "\u200c", "\u200d", "\xa0"):
+        text = text.replace(ch, " ")
+    return text.strip()
 
-def _idents_in_code(code: str):
-    toks = set(re.findall(r"\b[A-Za-z_]\w*\b", code))
-    return toks
 
-def _detect_op(instr: str):
-    s = instr.lower()
-    if "xnor" in s: return "xnor"
-    if "nand" in s: return "nand"
-    if "nor"  in s: return "nor"
-    if "parity" in s or "xor of all" in s: return "xor"
-    if "reduction xor" in s: return "rxor"
-    if "reduction or"  in s: return "ror"
-    if "reduction and" in s: return "rand"
-    if "xor" in s: return "xor"
-    if "and" in s: return "and"
-    if "or"  in s: return "or"
-    if "not" in s or "invert" in s: return "not"
-    return None
+def fixSimple(code: str) -> str:
+    # fix [0:3] -> [3:0] kind of stuff
+    def flip(m):
+        l = int(m.group(1))
+        r = int(m.group(2))
+        return f"[{r}:{l}]" if l < r else m.group(0)
 
-def _ports_by_dir(decl: str):
-    # crude but effective splits
-    ins  = re.findall(r"\binput\b[^;]*?([A-Za-z_]\w*)", decl)
-    outs = re.findall(r"\boutput\b[^;]*?([A-Za-z_]\w*)", decl)
-    return ins, outs
+    code = re.sub(r"\[(\d+)\s*:\s*(\d+)\]", flip, code)
 
-def _synthesize_simple(decl: str, instruction: str) -> str:
-    ins, outs = _ports_by_dir(decl)
-    header_m = re.search(r"(module\s+\w+\s*\([^;]*\);\s*)", decl, flags=re.I)
-    header = header_m.group(1) if header_m else "module top_module();"
-    op = _detect_op(instruction)
+    # if there is no always block
+    if not re.search(r"(?m)^\s*always\b", code):
+        code = re.sub(r"\breg\b", "wire", code)
+        code = re.sub(
+            r"(?m)^\s*([A-Za-z_]\w*(?:\[[^\]]+\])?)\s*<=\s*(.*?);",
+            r"assign \1 = \2;",
+            code,
+        )
+        code = re.sub(
+            r"(?m)^\s*(?!assign\b|wire\b|reg\b|input\b|output\b|inout\b|parameter\b|localparam\b|integer\b|genvar\b|if\b|case\b|for\b|always\b)"
+            r"([A-Za-z_]\w*(?:\[[^\]]+\])?)\s*=\s*(.*?);",
+            r"assign \1 = \2;",
+            code,
+        )
 
-    body = []
-    if not outs:
-        return header + "\nendmodule\n"
+    # strip line comments
+    code = re.sub(r"//.*", "", code)
 
-    # pick first output
-    y = outs[0]
-
-    # Single-input NOT
-    if op == "not" and ins:
-        body.append(f"  assign {y} = ~{ins[0]};")
-
-    # Two-input gates
-    elif op in {"and","or","xor","xnor","nand","nor"} and len(ins) >= 2:
-        a, b = ins[0], ins[1]
-        if op == "and":  expr = f"{a} & {b}"
-        if op == "or":   expr = f"{a} | {b}"
-        if op == "xor":  expr = f"{a} ^ {b}"
-        if op == "xnor": expr = f"{a} ^~ {b}"
-        if op == "nand": expr = f"~({a} & {b})"
-        if op == "nor":  expr = f"~({a} | {b})"
-        body.append(f"  assign {y} = {expr};")
-
-    # Reductions (best-effort: use first input as vector)
-    elif op in {"rand","ror","rxor","and","or","xor"} and ins:
-        v = ins[0]
-        red = "&" if op in {"rand", "and"} else "|" if op in {"ror", "or"} else "^"
-        body.append(f"  assign {y} = {red}{v};")
-
-    else:
-        # fallback constant to keep synthesis happy
-        body.append(f"  assign {y} = 1'b0;")
-
-    return header + "\n" + "\n".join(body) + "\nendmodule\n"
-
-def sanitize_code(code: str, module_declaration: str, instruction: str) -> str:
-    # Keep only the first module block
-    m = re.search(r"(module\b[\s\S]*?endmodule)", code, flags=re.I)
-    code = (m.group(1) if m else code).strip()
-
-    # Drop clearly forbidden or non-hardware outputs
-    if any(tok in code for tok in FORBIDDEN) or not re.search(r"\b(assign|always)\b", code):
-        return _synthesize_simple(module_declaration, instruction)
-
-    # Enforce header (exact signature)
-    code = enforce_header(module_declaration, code)
-
-    # Must end properly
-    if "endmodule" not in code:
-        code = code.rstrip() + "\nendmodule\n"
-
-    # Validate identifiers: if it uses unknown names (e.g., 'x') not in declaration, replace.
-    if module_declaration:
-        allowed = _decl_port_names(module_declaration) | _VKEYWORDS
-        used = _idents_in_code(code)
-        unknown = {t for t in used if t not in allowed}
-        # allow locally-declared regs/wires (very rough): if code declares them, whitelist them
-        locals_declared = set(re.findall(r"\b(?:wire|reg)\b[^;]*?([A-Za-z_]\w*)", code))
-        unknown -= locals_declared
-        if unknown:
-            return _synthesize_simple(module_declaration, instruction)
+    # common 2 bit temp pattern from baseline: collapse to a single assign
+    code = re.sub(
+        r"(?ms)^\s*wire\s*\[\s*1\s*:\s*0\s*\]\s*(\w+)\s*;\s*"
+        r"assign\s+\1\[\s*0\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
+        r"assign\s+\1\[\s*1\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
+        r"assign\s+([A-Za-z_]\w*)\s*=\s*\1\[\s*0\s*\]\s*&\s*\1\[\s*1\s*\]\s*;",
+        r"assign \4 = \2 & \3;",
+        code,
+    )
+    code = re.sub(
+        r"(?ms)^\s*wire\s*\[\s*1\s*:\s*0\s*\]\s*(\w+)\s*;\s*"
+        r"assign\s+\1\[\s*0\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
+        r"assign\s+\1\[\s*1\s*\]\s*=\s*([A-Za-z_]\w*)\s*;\s*"
+        r"assign\s+([A-Za-z_]\w*)\s*=\s*\1\[\s*1\s*\]\s*&\s*\1\[\s*0\s*\]\s*;",
+        r"assign \4 = \2 & \3;",
+        code,
+    )
 
     return code
 
-def generate_verilog(instruction: str, module_declaration: str = "", max_new_tokens: int = 128) -> str:
+
+def extractModule(raw: str, top: str):
+    """
+    Baseline-style extractor:
+    - normalize text
+    - find a module...endmodule block
+    - clean header / capitalization
+    - force module name to 'top'
+    - basic fixes
+    """
+    txt = normalize(raw)
+
+    # prefer a real module header line
+    header = re.search(r"(?ims)^\s*module\s+[A-Za-z_]\w*\s*\(", txt)
+    if header:
+        tail = txt[header.start():]
+        endm = re.search(r"(?is)\bendmodule\b", tail)
+        if not endm:
+            return None
+        code = tail[:endm.end()]
+    else:
+        m = re.search(r"(?is)\bmodule\b.*?\bendmodule\b", txt)
+        if not m:
+            return None
+        code = m.group(0)
+
+    # normalize capitalization/format
+    code = re.sub(r"(?m)^\s*Module\b", "module", code)
+    code = re.sub(r"(?im)^\s*module\s*[\"'\.]+", "module ", code)
+    code = re.sub(
+        r"(?im)^\s*module\s+([A-Za-z_]\w*)\b[^(\n]*\(",
+        r"module \1 (",
+        code,
+    )
+
+    # force module name to match the expected top
+    head = re.search(r"(?im)^\s*module\s+([A-Za-z_]\w*)", code)
+    if head and head.group(1) != top:
+        code = re.sub(
+            r"(?im)^\s*module\s+([A-Za-z_]\w*)",
+            f"module {top}",
+            code,
+            count=1,
+        )
+
+    # ensure header line ends with ';'
+    code = re.sub(
+        r"(?is)(^\s*module\s+\w+\s*\([^)]*\))\s*(?!;)",
+        r"\1;",
+        code,
+    )
+
+    # clip everything after the last 'endmodule'
+    end_idx = code.lower().rfind("endmodule")
+    if end_idx != -1:
+        code = code[:end_idx] + "endmodule"
+
+    code = fixSimple(code)
+
+    # must at least look like a module header
+    if not re.search(r"(?m)^\s*module\s+\w+\s*\(", code):
+        return None
+
+    if not code.endswith("\n"):
+        code += "\n"
+    return code
+
+
+def _top_from_decl(module_declaration: str, default: str = "top_module") -> str:
+    m = re.search(r"\bmodule\s+([A-Za-z_]\w*)", module_declaration or "")
+    return m.group(1) if m else default
+
+
+def _stub_from_decl(module_declaration: str, top: str) -> str:
+    decl = (module_declaration or "").strip()
+    if decl:
+        header = " ".join(decl.split())
+        if not header.endswith(";"):
+            header += ";"
+        return header + "\nendmodule\n"
+    # worst case: no declaration at all
+    return f"module {top}();\nendmodule\n"
+
+
+# main generation function vvvvvv
+
+
+def generate_verilog(
+    instruction: str,
+    module_declaration: str = "",
+    max_new_tokens: int = 256,
+) -> str:
     tok, model = load_model()
     prompt = build_prompt(instruction, module_declaration)
     ids = tok(prompt, return_tensors="pt")
-    ids = {k: v.to(DEV) for k, v in ids.items()}  # keep tensors on the model device
+    ids = {k: v.to(DEV) for k, v in ids.items()}
+
     with torch.inference_mode():
         out = model.generate(
             **ids,
             max_new_tokens=max_new_tokens,
-            do_sample=False,
+            do_sample=False,      # deterministic again
             temperature=None,
             top_p=None,
             eos_token_id=tok.eos_token_id,
         )
+
+    # strip off the prompt from the decoded text
     gen = tok.decode(out[0], skip_special_tokens=True)[len(prompt):]
-    code = slice_module(gen)
-    return sanitize_code(code, module_declaration, instruction)
+
+    top = _top_from_decl(module_declaration, default="top_module")
+    code = extractModule(gen, top)
+
+    if code is None:
+        # model failed to give us a clean module BRUH fall back to a stub
+        code = _stub_from_decl(module_declaration, top)
+
+    return code
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()

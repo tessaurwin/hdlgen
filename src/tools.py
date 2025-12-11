@@ -16,7 +16,7 @@ def verilator_compile(vfile: pathlib.Path):
     return code == 0, out + err
 
 def yosys_synth(vfile: pathlib.Path, top: str):
-    # quick synth gate: read + hierarchy + synth + stat
+    # quick synth gate read + hierarchy + synth + stat
     script = f"read_verilog {vfile}; hierarchy -check -top {top}; synth -top {top}; stat"
     code, out, err = _run(["yosys", "-p", script])
     ok = (code == 0) and ("Printing statistics." in out)

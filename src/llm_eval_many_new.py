@@ -17,29 +17,34 @@ def module_name_from_declaration(decl: str) -> str:
     return m.group(1) if m else "top_module"
 
 def evaluate_one_task(task: dict, verilog_dir: pathlib.Path, logs_dir: pathlib.Path):
-    """Generate code for one task, run three checks, and write logs."""
     task_id  = task["id"]
-    want_top = task.get("top", "top_module")      # <- parentheses, not brackets
+    want_top = task.get("top", "top_module")
     prompt   = task.get("prompt") or task.get("instruction")
     decl     = task.get("module_declaration", "")
     if not prompt:
         raise ValueError(f"task {task_id} has no 'prompt' or 'instruction'")
 
+    # if there is no explicit module_declaration, synthesize a trivial one
+    # so the generator knows the intended module name + ports (even if empty)
+    if not decl:
+        # at least force the top-level module name to match the task's top
+        decl = f"module {want_top}();"
+
     vpath = verilog_dir / f"{task_id}.v"
 
-    # Generate Verilog (header enforced via decl if provided)
+    # generate verilog (header enforced via decl if there)
     code = generate_verilog(prompt, decl)
     vpath.write_text(code)
 
-    # For synthesis, top = declared module name if present, else "top_module"
+    # for synthesis, top = declared module name if present, else "top_module"
     synth_top = module_name_from_declaration(decl)
 
-    # Run checks
+    # run checks
     lint_ok, lint_warns, lint_log = verible_lint(vpath)
     sim_ok, sim_log = verilator_compile(vpath)
     synth_ok, synth_log = yosys_synth(vpath, synth_top)
 
-    # Logs
+    # logs
     (logs_dir / f"{task_id}.verible.log").write_text(lint_log)
     (logs_dir / f"{task_id}.verilator.log").write_text(sim_log)
     (logs_dir / f"{task_id}.yosys.log").write_text(synth_log)
@@ -98,7 +103,7 @@ def main():
             print(f"error on {t.get('id','?')}: {e}", file=sys.stderr)
 
 
-    # Write CSV even if some tasks failed
+    # write CSV even if some tasks failed
     if rows:
         with out_csv.open("w", newline="") as f:
             w = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
