@@ -2,6 +2,13 @@
 
 This repo evaluates a small language model (TinyLlama-1.1B) on Verilog code generation, then fine-tunes it with LoRA and re-evaluates. It also checks generated modules with lightweight randomized testbenches.
 
+## Authors
+
+Tessa Urwin
+Julian O'Hern
+
+ECE 465 Digital Systems Design Fall 2025 Graduate Project
+
 ## TLDR/our results
 
 - Check	            Baseline	    Trained (LoRA)  Improvmenet:
