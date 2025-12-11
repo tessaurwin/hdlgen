@@ -85,7 +85,7 @@ Outputs:
 - Verilog files in outputs/v_lora/
 - Metrics table in results/lora_eval.csv
 
-Phase 3 — Functional sanity via tiny testbenches
+## Phase 3 — Functional sanity via tiny testbenches
 
 We do a dumb but useful simulation test using Icarus Verilog (iverilog + vvp). For each .v file:
 - Auto-rename the first module to dut
