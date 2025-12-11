@@ -4,11 +4,9 @@ This repo evaluates a small language model (TinyLlama-1.1B) on Verilog code gene
 
 ## Authors
 
-Tessa Urwin
+Tessa Urwin and Julian O'Hern
 
-Julian O'Hern
-
-ECE 465 Digital Systems Design Fall 2025 Graduate Project
+ECE 465 Digital Systems Design - Fall 2025 Graduate Project
 
 ## TLDR/our results
 
