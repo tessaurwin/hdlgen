@@ -4,17 +4,17 @@ This repo evaluates a small language model (TinyLlama-1.1B) on Verilog code gene
 
 ## Authors
 
-Tessa Urwin and Julian O'Hern
+Tessa Urwin and Julian O'Hern.
 
 ECE 465 Digital Systems Design - Fall 2025 Graduate Project
 
 ## TLDR/our results
 
-- Check	            Baseline	    Trained (LoRA)  Improvmenet:
-- Verible syntax	    12/22 (54.5%)	21/22 (95.5%)	+40.9%
-- Verilator compile	11/22 (50.0%)	18/22 (81.8%)	+31.8%
-- Yosys synth	        12/22 (54.5%)	18/22 (81.8%)	+27.3%
-- Testbenches	        13/22 (59.1%)	18/22 (81.8%)	+22.7%
+- Check |	            Baseline |	    Trained (LoRA) |  Improvmenet:
+- Verible syntax |	    4/22 = 18% |	16/22 (72.7%) |	+54.7%
+- Verilator compile |	3/22 (14%) |	11/22 (50%) |	+36%
+- Yosys synth |	        4/22 (18%) |	11/22 (50%) |	+32%
+- Testbenches |	        13/22 (59.1%) |	18/22 (81.8%) |	+22.7%
 
 ## What this repo does
 
@@ -79,7 +79,7 @@ What it does:
 
 Fine-tune with LoRA:
 
-python src/finetune_from_hdljson_new.py --train data/training_dataset.json --base tinyllama/TinyLlama-1.1B-Chat-v1.0 --out_dir runs/lora_tinyllama --lr 2e-4 --epochs 3 --batch_size 8
+python src/finetune_from_hdljson_new.py --train data/training_dataset.json --base TinyLlama/TinyLlama-1.1B-Chat-v1.0 --out_dir checkpoints/tinyllama_lora_hdl --lr 2e-4 --epochs 3 --batch_size 8
 
 This produces LoRA weights in runs/lora_tinyllama/.
 
@@ -91,9 +91,16 @@ Outputs:
 - Verilog files in outputs/v_lora/
 - Metrics table in results/lora_eval.csv
 
+Notes:
+- Postprocessing scripts include simple header enforcement and a fallback generator to ensure valid 'module...endmodule' syntax.
+- Training used Apple M2 (MPS backend) and noo cloud GPUs were used.
+- The fixSimple helper slightly normalizes syntax; it doesn’t affect logic evaluation but may alter structure.
+
 ## Phase 3 — Functional sanity via tiny testbenches
 
-We do a dumb but useful simulation test using Icarus Verilog (iverilog + vvp). For each .v file:
+* Disclaimer: still a work in progress. Phase 3 is currently not fully functional.
+
+We do a simulation test using Icarus Verilog (iverilog + vvp). For each .v file:
 - Auto-rename the first module to dut
 - Parse the port list from the known declaration
 - Generate a tiny testbench that randomly toggles inputs for N iterations
@@ -124,7 +131,7 @@ Icarus Verilog compiles your Verilog testbench and DUT into a sim binary. iveril
 
 CSV artifacts live in results/. Generated HDL lives in outputs/v_base and outputs/v_lora.
 
-Notes pls do not @ me on thesse:
+Notes :
 
 - Training set is small. Around 30+ modules. The goal was to successfully fine-tune locally and see improvement. Larger dataset will obviously give more roburst results.
 - Testbenches are minimal. They randomize inputs and check for compile failures. They are not amazing functional tests.
